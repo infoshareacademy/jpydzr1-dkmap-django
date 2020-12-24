@@ -1,0 +1,23 @@
+{% load static %}
+
+<!-- Navbar -->
+<nav>
+    <div class="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#"><img src='{% static "img/logo.png" %}' alt='main-logo' class="logo"></a></li>
+        {% if request.user.is_authenticated %}
+        <li><a href="#">New Game</a></li>
+        <li><a href="#">Statistics</a></li>
+        <li><a href="{% url 'account_logout' %}">Log Out</a></li>
+        {% else %}
+        <li><a href="{% url 'account_login' %}">Log In</a></li>
+        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+
+        {% endif %}
+    </ul>
+</nav>
+<!-- END Navbar -->

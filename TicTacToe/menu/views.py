@@ -7,6 +7,11 @@ class WelcomeView(TemplateView):
 
 
 class GameDetailView(View):
-
     def get(self, request):
         return render(self.request, 'game_detail.html')
+
+
+class NewGameView(View):
+    def get(self, request):
+        return render(self.request, 'new_game.html')
+

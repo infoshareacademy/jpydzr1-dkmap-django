@@ -11,8 +11,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+
 import os
-from secrets import SECRET_KEY
+# import os.path import join
+
+from secret_data import SECRET_KEY
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -111,6 +115,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Modified allauth forms
+ACCOUNT_FORMS = {'signup': 'menu.forms.MyCustomSignupForm'}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -135,6 +142,12 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'apps_static/')
 
+
+# ALLAUTH CONFIGURATION
+
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_SIGNUP_REDIRECT_URL = (LOGIN_REDIRECT_URL + 'game')
+
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
@@ -143,4 +156,8 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+
 SITE_ID = 1
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -3,7 +3,7 @@
 
 #venv
 /venv
-secrets.py
+secret_data.py
 
 ### Django ###
 *.log

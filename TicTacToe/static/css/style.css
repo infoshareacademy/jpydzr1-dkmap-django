@@ -13,6 +13,10 @@ nav {
     background: #E7E3E3;
 }
 
+p:nth-child(odd){
+    line-height: 1.7;
+}
+
 .nav-links {
     display: flex;
     list-style: none;
@@ -116,6 +120,28 @@ nav {
 
 
 .CTA-button:hover{
+    transform: scale(1.1);
+    transition: ease 0.7s;
+    color: #D32F2F;
+    border: solid 1px white;
+}
+
+.CTA-button-auth{
+    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+    height: 40px;
+    width: 40vh;
+    color: #fff;
+    background-color: #6BBFEF;
+    border-radius: 10px;
+    border: solid 1px #fff;
+    cursor: pointer;
+    margin: 12px;
+    padding-right: 22px;
+    padding-left: 22px;
+}
+
+.CTA-button-auth:hover{
     transform: scale(1.1);
     transition: ease 0.7s;
     color: #D32F2F;

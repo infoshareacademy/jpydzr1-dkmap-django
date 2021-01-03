@@ -8,9 +8,9 @@
         <div class="line"></div>
     </div>
     <ul class="nav-links">
-        <li><a href="#"><img src='{% static "img/logo.png" %}' alt='main-logo' class="logo"></a></li>
+        <li><a href="{% url 'welcome-view' %}"><img src='{% static "img/logo.png" %}' alt='main-logo' class="logo"></a></li>
         {% if request.user.is_authenticated %}
-        <li><a href="#">New Game</a></li>
+        <li><a href="{% url 'new-game-view' %}">New Game</a></li>
         <li><a href="#">Statistics</a></li>
         <li><a href="{% url 'account_logout' %}">Log Out</a></li>
         {% else %}

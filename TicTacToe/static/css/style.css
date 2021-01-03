@@ -48,22 +48,45 @@ nav {
     margin: auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
-.column-1{
+.column-100{
+    padding: 35px 0 15px 0;
+    display: flex;
+    justify-content: center;
+    width: 95%;
+}
+
+.column-50{
+    flex: 1 50%;
+    padding: 50px 50px 50px 50px;
+}
+
+.column-70{
     flex: 1 70%;
+    padding: 50px 50px 50px 50px;
 }
 
-.column-2{
+.column-30{
     display: flex;
     flex: 1 30%;
     align-items: center;
     justify-content: center;
 }
 
+.column-2 a{
+    width: 180px;
+}
+
 .responsive{
     padding: 40px 0 40px 0;
     width: 100%;
+    height: auto;
+}
+
+.responsive-about{
+    width: 60%;
     height: auto;
 }
 
@@ -80,7 +103,7 @@ nav {
     font-size: 22px;
     font-family: 'Poppins', sans-serif;
     height: 40px;
-    width: 70%;
+    width: 100%;
     color: #fff;
     background-color: #6BBFEF;
     border-radius: 10px;
@@ -97,6 +120,49 @@ nav {
     transition: ease 0.7s;
     color: #D32F2F;
     border: solid 1px white;
+}
+
+.about-out{
+    display: inline-block;
+    width: 95%;
+    background-color: #69B15D;
+    text-align: center;
+    border-radius: 30px;
+    border: solid 2px black;
+}
+
+.about-out h2{
+    text-align: left;
+    padding: 15px 0 0 50px;
+    color: white;
+}
+
+.about-in-1{
+    display: inline-block;
+    padding: 10px 10px 10px 10px;
+    margin: 20px 0 30px 0;
+    width: 85%;
+    background-color: #ECCF37;
+    border-radius: 20px;
+    border: solid 2px black;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.about-in-2{
+    display: inline-block;
+    padding: 10px 10px 10px 10px;
+    margin: 20px 0 30px 0;
+    width: 85%;
+    background-color: #ECCF37;
+    border-radius: 20px;
+    border: solid 2px black;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.about-in-2 p{
+    text-align: left;
 }
 
 .danger-button{

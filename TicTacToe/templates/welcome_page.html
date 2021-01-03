@@ -4,12 +4,14 @@
 {% block content %}
 
     <div class="container">
-        <div class="column-1">
+        <div class="column-70">
             <img class="responsive" src="{% static 'img/tictac.png' %}">
 
         </div>
-        <div class="column-2">
-            <button class="CTA-button">PLAY</button>
+        <div class="column-30">
+            <a href="{% url "new-game-view" %}">
+                <button class="CTA-button" type="button">PLAY</button>
+            </a>
         </div>
     </div>
 

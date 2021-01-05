@@ -1,0 +1,15 @@
+{% load static %}
+
+    <div class="about-out">
+        <img src='{% static "img/logo_color.png" %}' alt='main-logo' class="responsive-about">
+        {% for user in username %}
+        <h2 class="about-title">Hello {{ user.user|capfirst }}!</h2>
+
+        <div class="about-in-3">
+            <p><strong>Time spend in game: </strong><span>{{ user.time_spend_in_game }}</span></p>
+            <p><strong>Best game time: </strong><span>{{ user.best_game_time }}</span></p>
+            <p><strong>Game counter: </strong><span>{{ user.game_counter }}</span></p>
+            <p><strong>Win counter: </strong><span>{{ user.win_counter }}</span></p>
+        </div>
+        {% endfor %}
+    </div>

@@ -191,6 +191,28 @@ p:nth-child(odd){
     text-align: left;
 }
 
+.about-in-3{
+    display: inline-block;
+    padding: 10px 10px 10px 10px;
+    margin: 20px 0 30px 0;
+    width: 85%;
+    background-color: #ECCF37;
+    border-radius: 20px;
+    border: solid 2px black;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.about-in-3 p{
+    text-align: center;
+}
+
+.about-in-3 span{
+    color: #d5160c;
+    font-size: 18px;
+    padding-left: 15px;
+}
+
 .danger-button{
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
@@ -214,10 +236,10 @@ p:nth-child(odd){
 }
 
 section{
-    background: linear-gradient(#605C5C,#040303);
+    background: #ffffff;
     text-align: center;
     padding: 100px 20px 100px 20px;
-    color: white;
+    color: black;
 }
 
 section1{

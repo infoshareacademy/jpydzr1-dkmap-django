@@ -1,16 +1,19 @@
 from django.shortcuts import render
 from django.views.generic import View
-from django.http import HttpResponse
+from menu.models import PlayerStatistic
 
 # Create your views here.
 
 
 class ProfileView(View):
     def get(self, request):
+        user = self.request.user
+
         context = {
-            'username': 'mateusz',
+            'username': PlayerStatistic.objects.filter(user=user),
         }
-        return render(self.request, 'profile_view.html')
+
+        return render(self.request, 'profile_view.html', context)
 
     def post(self, request):
         context = {

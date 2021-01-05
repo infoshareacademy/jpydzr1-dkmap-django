@@ -1,20 +1,17 @@
 from django.db import models
+from django.conf import settings
 
 
-class Statistics(models.Model):
+class PlayerStatistic(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    time_spend_in_game = models.DurationField(default=0)
+    best_game_time = models.DurationField(default=0)
+    game_counter = models.IntegerField()
+    win_counter = models.IntegerField()
+    lose_counter = models.IntegerField()
 
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-    # statystyki ogolne:
-        # - nick gracza,
-
-        # - czas gry, ????
-        # - rekordowy czas gry, ????
-
-        # - ilosc wygranych, + 1
-        # - ilosc przegranych, - 1
-
-    pass
+    def __str__(self):
+        return self.user
 
 
 class Game(models.Model):

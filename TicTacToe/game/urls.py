@@ -3,6 +3,6 @@ from game.views import ProfileView
 
 
 urlpatterns = [
-    path('', ProfileView.as_view(), name='profile-view')
+    path('profile/', ProfileView.as_view(), name='profile-view')
 
 ]

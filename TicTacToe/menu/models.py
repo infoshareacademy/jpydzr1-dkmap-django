@@ -11,7 +11,7 @@ class PlayerStatistic(models.Model):
     lose_counter = models.IntegerField()
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 
 class Game(models.Model):
@@ -25,5 +25,5 @@ class Game(models.Model):
     # czas rozpoczenia,
     # czas zakonczenia,
     # czas partii, 'DurationField'
-
     pass
+

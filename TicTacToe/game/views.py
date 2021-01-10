@@ -2,8 +2,6 @@ from django.shortcuts import render
 from django.views.generic import View
 from menu.models import PlayerStatistic
 
-# Create your views here.
-
 
 class ProfileView(View):
     def get(self, request):
@@ -20,3 +18,11 @@ class ProfileView(View):
             'username': 'mateusz',
         }
         return render(self.request, 'profile_view.html', context)
+
+
+class BoardView(View):
+    def get(self, request):
+        return render(self.request, 'board_view.html')
+
+    def post(self, request):
+        data = self.request.POST

@@ -55,6 +55,30 @@ p:nth-child(odd){
     justify-content: center;
 }
 
+.board-container {
+    width: 385px;
+    height: 395px;
+    left: 134px;
+    top: 49px;
+    background: #D32F2F;
+}
+
+.board-row{
+    display: flex;
+    flex-direction: row;
+    padding: 2px;
+}
+
+.board-field{
+    margin: 2px;
+    width: 123px;
+    height: 123px;
+    left: 143px;
+    top: 56px;
+    background: #ECCF37;
+}
+
+
 .column-100{
     padding: 35px 0 15px 0;
     display: flex;

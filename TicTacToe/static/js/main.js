@@ -34,12 +34,9 @@ function createBoard() {
     $.ajax({
         type: "POST",
         url: newBoard,
-
-        // Reset board when button clicked
         success: function(data) {
             clearBoard();
           },
-
         error: function(data) {
         alert(`Something went wrong.`)
         }

@@ -91,6 +91,10 @@ p:nth-child(odd){
     padding: 50px 50px 50px 50px;
 }
 
+.column-50 h3, p{
+    text-align: center;
+}
+
 .column-70{
     flex: 1 70%;
     padding: 50px 50px 50px 50px;
@@ -237,28 +241,6 @@ p:nth-child(odd){
     padding-left: 15px;
 }
 
-.danger-button{
-    font-size: 15px;
-    font-family: 'Poppins', sans-serif;
-    height: 45px;
-    width: auto;
-    color: #fff;
-    background-color: #d5160c;
-    border-radius: 10px;
-    border: solid 1px #fff;
-    cursor: pointer;
-    margin: 12px;
-    padding-right: 22px;
-    padding-left: 22px;
-}
-
-.danger-button:hover{
-    transform: scale(1.1);
-    transition: ease 0.7s;
-    color: #FFD700;
-    border: solid 1px white;
-}
-
 section{
     background: #ffffff;
     text-align: center;
@@ -333,6 +315,27 @@ section{
   cursor: pointer;
 }
 
+#create-board{
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    height: 45px;
+    width: auto;
+    color: #fff;
+    background-color: #d5160c;
+    border-radius: 10px;
+    border: solid 1px #fff;
+    cursor: pointer;
+    margin: 12px;
+    padding-right: 22px;
+    padding-left: 22px;
+}
+
+#create-board:hover{
+    transform: scale(1.1);
+    transition: ease 0.7s;
+    color: #FFD700;
+    border: solid 1px white;
+}
 
 @media screen and (max-width: 800px) {
 

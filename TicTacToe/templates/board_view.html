@@ -3,8 +3,6 @@
 
 {% block content %}
 
-    <button onclick="createBoard()" id="create-board">CREATE</button>
-
     <div class="container">
         <div class="container">
         <div class="column-50">
@@ -15,10 +13,9 @@
             <h3>SkyNet</h3>
             <p>Points: </p>
         </div>
+            <button onclick="createBoard()" id="create-board">START A NEW GAME</button>
     </div>
-
         <div class="column-100">
-
             {% include 'board.html' %}
         </div>
     </div>

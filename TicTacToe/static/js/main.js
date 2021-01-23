@@ -34,6 +34,15 @@ function createBoard() {
     $.ajax({
         type: "POST",
         url: newBoard,
+
+        // Reset board when button clicked
+        success: function(data) {
+            clearBoard();
+          },
+
+        error: function(data) {
+        alert(`Something went wrong.`)
+        }
 })}
 
 
@@ -43,12 +52,11 @@ function updateBoard(button_id) {
         url: newUpdateBoard,
         data: {'button_id': button_id},
         dataType: 'json',
-
         success: function(data) {
             document.querySelector('#' + button_id).innerHTML = data[button_id]
           },
         error: function(data) {
-        alert(`das`)
+        alert(`Something went wrong.`)
         }
 })}
 
@@ -57,4 +65,8 @@ $('[id*="_field"]').click(function () {
     let button_id = this.id
     updateBoard(button_id)
 });
+
+function clearBoard(){
+    console.log('czesc')
+}
 

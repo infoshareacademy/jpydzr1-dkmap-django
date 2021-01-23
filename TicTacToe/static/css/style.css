@@ -266,13 +266,6 @@ section{
     color: black;
 }
 
-section1{
-    background: linear-gradient(to right, #17981a, 90%, #fff);
-    opacity: 70%;
-    display: block;
-    padding: 5px;
-}
-
 .message-box{
     font-family: 'Poppins', sans-serif;
     padding: 5px;
@@ -326,6 +319,18 @@ section1{
 
 .capitalize{
     text-transform: capitalize;
+}
+
+.board-button{
+  margin: 1px;
+  width: 120px;
+  height: 120px;
+  border: 2px black solid;
+  text-align: center;
+  font-weight: bold;
+  font-family:  Cursive, Ubuntu, Roboto, Arial, sans-serif;
+  font-size: 100px;
+  cursor: pointer;
 }
 
 

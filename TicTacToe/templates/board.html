@@ -3,35 +3,81 @@
 <div class="board-container">
     <div class="board-row">
         <div class="board-field">
-            <button id="first_field">{{ board.first_field }}</button>
+            <button class="board-button" id="first_field">
+                {% if board.first_field == '-' %}
+                {% else %}
+                {{ board.first_field }}
+                {% endif %}
+            </button>
         </div>
         <div class="board-field">
-            <button id="second_field">{{ board.second_field }}</button>
+            <button class="board-button" id="second_field">
+                {% if board.second_field == '-' %}
+                {% else %}
+                {{ board.second_field }}
+                {% endif %}
+            </button>
         </div>
         <div class="board-field">
-            <button id="third_field">{{ board.third_field }}</button>
+            <button class="board-button" id="third_field">
+                {% if board.third_field == '-' %}
+                {% else %}
+                {{ board.third_field }}
+                {% endif %}
+            </button>
         </div>
     </div>
     <div class="board-row">
         <div class="board-field">
-            <button id="fourth_field">{{ board.fourth_field }}</button>
+            <button class="board-button" id="fourth_field">
+                {% if board.fourth_field == '-' %}
+                {% else %}
+                {{ board.fourth_field }}
+                {% endif %}
+            </button>
         </div>
         <div class="board-field">
-            <button id="fifth_field">{{ board.fifth_field }}</button>
+            <button class="board-button" id="fifth_field">
+                {% if board.fifth_field == '-' %}
+                {% else %}
+                {{ board.fifth_field }}
+                {% endif %}
+            </button>
         </div>
         <div class="board-field">
-            <button id="sixth_field">{{ board.sixth_field }}</button>
+            <button class="board-button" id="sixth_field">
+                {% if board.sixth_field == '-' %}
+                {% else %}
+                {{ board.sixth_field }}
+                {% endif %}
+            </button>
         </div>
     </div>
     <div class="board-row">
         <div class="board-field">
-            <button id="seventh_field">{{ board.seventh_field }}</button>
+            <button class="board-button" id="seventh_field">
+                {% if board.seventh_field == '-' %}
+                {% else %}
+                {{ board.seventh_field }}
+                {% endif %}
+            </button>
         </div>
         <div class="board-field">
-            <button id="eighth_field">{{ board.eighth_field }}</button>
+            <button class="board-button" id="eighth_field">
+                {% if board.eighth_field == '-' %}
+                {% else %}
+                {{ board.eighth_field }}
+                {% endif %}
+            </button>
         </div>
         <div class="board-field">
-            <button id="ninth_field">{{ board.ninth_field }}</button>
+            <button class="board-button" id="ninth_field">
+                {% if board.ninth_field == '-' %}
+                {% else %}
+                {{ board.ninth_field }}
+                {% endif %}
+            </button>
         </div>
     </div>
 </div>
+

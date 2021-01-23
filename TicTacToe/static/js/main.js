@@ -66,7 +66,16 @@ $('[id*="_field"]').click(function () {
     updateBoard(button_id)
 });
 
+
 function clearBoard(){
-    console.log('czesc')
+    $("#first_field").html("");
+    $("#second_field").html("");
+    $("#third_field").html("");
+    $("#fourth_field").html("");
+    $("#fifth_field").html("");
+    $("#sixth_field").html("");
+    $("#seventh_field").html("");
+    $("#eighth_field").html("");
+    $("#ninth_field").html("");
 }
 

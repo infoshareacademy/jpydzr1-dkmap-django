@@ -97,7 +97,7 @@ DATABASES = {
     'default': {
 
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_postgres',
+        'NAME': 'db_postgres',
         'USER': 'postgres',
         'PASSWORD': DB_PASSWORD,
         'HOST':  '127.0.0.1',
@@ -179,3 +179,5 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated', )
 }
+
+FIXTURE_DIRS = [BASE_DIR]

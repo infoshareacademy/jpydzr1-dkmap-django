@@ -50,12 +50,26 @@ function updateBoard(button_id) {
         data: {'button_id': button_id},
         dataType: 'json',
         success: function(data) {
-            document.querySelector('#' + button_id).innerHTML = data[button_id]
+            document.querySelector(`#${button_id}`).innerHTML = data[button_id]
           },
         error: function(data) {
         alert(`Something went wrong.`)
         }
 })}
+
+function joinBoard() {
+    $.ajax({
+        type: 'PUT',
+        url: joinNewBoard,
+        dataType: 'json',
+
+        success: function (){
+            alert('hej1')
+        },
+        error: function () {
+            alert('hej2')
+        },
+    })}
 
 
 $('[id*="_field"]').click(function () {

@@ -1,9 +1,16 @@
 from django.contrib import admin
-from game.models import Game, Board
+from .models import Game, Board
 
 
-admin.site.register(Game)
-admin.site.register(Board)
+@admin.register(Game)
+class HouseAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Board)
+class HouseAdmin(admin.ModelAdmin):
+    pass
+
 
 
 

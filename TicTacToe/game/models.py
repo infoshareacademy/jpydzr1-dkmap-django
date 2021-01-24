@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.postgres.fields import ArrayField
 
 
 board_choices = (('X', 'X'),
@@ -10,19 +9,35 @@ board_choices = (('X', 'X'),
 
 
 class Game(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    multiplayer_game = models.BooleanField(default=False)
+    player_x = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                 related_name="player_x_games",
+                                 on_delete=models.CASCADE,
+                                 blank=True,
+                                 null=True
+                                 )
+    player_o = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                 related_name="player_o_games",
+                                 on_delete=models.CASCADE,
+                                 blank=True,
+                                 null=True
+                                 )
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   related_name='created_games',
+                                   on_delete=models.CASCADE,
+                                   null=True,
+                                   blank=True
+                                   )
+    in_progress = models.BooleanField(default=True)
     win = models.BooleanField(default=False)
     start_time = models.DateTimeField(auto_now_add=True, blank=True)
     finish_time = models.DateTimeField(blank=True, null=True)
-    game_duration = models.DurationField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.start_time} - {self.user.username}"
+        return f"{self.start_time} - {self.player_x}"
 
 
 # class GameSession(models.Model):
-#     games = models.ForeignKey(Game, on_delete=models.CASCADE)
+#     games = models.ForeignKey(Game, on_delete=models.PROTECT)
 
 
 class Board(models.Model):

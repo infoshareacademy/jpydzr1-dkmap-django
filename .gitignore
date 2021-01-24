@@ -4,6 +4,8 @@
 #venv
 /venv
 secret_data.py
+data.json
+ngrok
 
 ### Django ###
 *.log

@@ -23,7 +23,7 @@ class MyCustomSignupForm(SignupForm):
         user = super(MyCustomSignupForm, self).save(request)
 
         # Add your own processing here.
-        default_group = Group.objects.get_or_create(name='Users')
+        default_group, created = Group.objects.get_or_create(name='Users')
         user.groups.add(default_group)
 
         first_name = self.cleaned_data.pop('first_name')

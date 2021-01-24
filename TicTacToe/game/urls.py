@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import ProfileView, BoardView, ApiView, login, CreateBoard, UpdateBoard
+from .views import ProfileView, BoardView, ApiView, login, CreateBoard, UpdateBoard, JoinBoard
 from rest_framework import routers
 
 
@@ -13,5 +13,6 @@ urlpatterns = [
     path('api/login', login),
     path('api/create', CreateBoard.as_view(), name='create_board'),
     path('api/update', UpdateBoard.as_view(), name='update_board'),
+    path('api/join', JoinBoard.as_view(), name='join_board'),
 
 ]

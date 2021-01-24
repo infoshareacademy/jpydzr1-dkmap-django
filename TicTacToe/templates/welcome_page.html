@@ -9,9 +9,17 @@
 
         </div>
         <div class="column-30">
+            {% if request.user.is_authenticated %}
             <a href="{% url "new-game-view" %}">
                 <button class="CTA-button" type="button">PLAY</button>
             </a>
+            {% else %}
+                <div class="container">
+                <h2 class="welcome-text">Welcome in TicTacToe Game!</h2>
+                <h4 class="welcome-text">Please Log In or Sign Up</h4>
+                </div>
+            {% endif %}
+
         </div>
     </div>
 

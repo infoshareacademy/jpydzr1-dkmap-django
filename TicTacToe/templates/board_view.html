@@ -5,15 +5,27 @@
 
     <div class="container">
         <div class="container">
+
+            <h4 style="margin-top: 15px;">Hi {{ request.user|capfirst }}! Good to see you. Please click 'START A NEW GAME'
+            button and wait for another player to join your game or simply join your friend and have fun.
+            Good luck!</h4>
+
         <div class="column-50">
-            <h3>{{ user|capfirst }}</h3>
+            <h2>{{ user|capfirst }}</h2>
             <p>Points: </p>
+
+            <h3>{{ request.user }}</h3>
+
         </div>
         <div class="column-50">
-            <h3>SkyNet</h3>
+            <h2>{{ user|capfirst }}</h2>
             <p>Points: </p>
+
+            <h3>{{ request.user }}</h3>
         </div>
             <button onclick="createBoard()" id="create-board">START A NEW GAME</button>
+            <button onclick="joinBoard()" id="create-board">JOIN A GAME</button>
+
     </div>
         <div class="column-100">
             {% include 'board.html' %}

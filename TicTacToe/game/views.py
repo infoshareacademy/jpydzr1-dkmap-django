@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
@@ -19,6 +19,7 @@ from random import randint
 class ProfileView(View):
     def get(self, request):
         user = self.request.user
+
         context = {
             'username': PlayerStatistic.objects.filter(user=user),
         }
@@ -34,8 +35,29 @@ class ProfileView(View):
 
 class BoardView(View):
     def get(self, request):
+
+        logged_user = request.user
+
+        player_1 = str(logged_user)
+
+        player_2 = str(Board.objects.last().game.player_o)
+
+        if player_1 == player_2:
+            right_player = str(Board.objects.last().game.player_x)
+            right_player_sign = 'X'
+            left_player_sign = 'O'
+        else:
+            right_player = str(Board.objects.last().game.player_o)
+            right_player_sign = 'O'
+            left_player_sign = 'X'
+
         context = {
-            'board': Board.objects.last()
+            'board': Board.objects.last(),
+            'right_player': right_player,
+            'right_player_sign': right_player_sign,
+            'left_player_sign': left_player_sign,
+            'open_games': Board.objects.filter(game__in_progress=True).filter(
+                Q(game__player_o=None) | Q(game__player_x=None)).order_by('game')
         }
 
         return render(self.request, 'board_view.html', context)
@@ -57,6 +79,8 @@ class CreateBoard(APIView):
                 game.player_x = user
             else:
                 game.player_o = user
+
+            game.created_by = user
             game.save()
 
             board = Board(game=game)
@@ -73,11 +97,34 @@ class CreateBoard(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class RefreshBoard(APIView):
+    def get(self, request):
+        try:
+            user = self.request.user
+            board = Board.objects.filter(game__in_progress=True).filter(Q(game__player_o=user) | Q(game__player_x=user)).last()
+            if board is None:
+                return Response(data=board)
+
+        except:
+            raise ValueError('Wrong input data. Try again.')
+        if request.method == 'GET':
+            serializer = BoardSerializer(board, data=self.request.data)
+            data = {}
+            if serializer.is_valid():
+                serializer.save()
+                data['success'] = 'update successful'
+                return Response(data=serializer.data)
+            else:
+                print(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class JoinBoard(APIView):
     def put(self, request):
         try:
             user = self.request.user
-            board = Board.objects.last()
+            board_number = self.request.data['joined_board']
+            board = Board.objects.get(id=board_number)
 
             if board.game.player_x is None:
                 board.game.player_x = user
@@ -102,13 +149,42 @@ class JoinBoard(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+def check_win_board(board) -> bool:
+    if board.win_board():
+        return True
+    return False
+
+
+def check_if_board_is_full(board) -> bool:
+    if board.check_if_board_is_full():
+        return True
+    return False
+
+
 class UpdateBoard(APIView):
     def put(self, request):
         try:
             user = self.request.user
-            board = Board.objects.last()
+            board = Board.objects.filter(game__in_progress=True).filter(Q(game__player_o=user) | Q(game__player_x=user)).last()
             field = self.request.data['button_id']
-            self.field_input(board, field)
+
+            # Empty field check:
+            if board.check_if_field_is_empty(field) and board.game.in_progress:
+                self.field_input(board, field)
+            else:
+                pass
+
+            # Win/tie check:
+            win = check_win_board(board)
+            if win:
+                board.game.win = True
+                board.game.in_progress = False
+            else:
+                tie = check_if_board_is_full(board)
+                if tie:
+                    board.game.in_progress = False
+
+            board.game.save()
 
         except:
             raise ValueError('Wrong input data. Try again.')
@@ -124,29 +200,58 @@ class UpdateBoard(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def field_input(self, board, field):
+
         if field == 'first_field':
-            board.first_field = 'X'
+            if str(self.request.user) == board.game.player_x.username:
+                board.first_field = 'X'
+            else:
+                board.first_field = 'O'
         elif field == 'second_field':
-            board.second_field = 'X'
+            if str(self.request.user) == board.game.player_x.username:
+                board.second_field = 'X'
+            else:
+                board.second_field = 'O'
         elif field == 'third_field':
-            board.third_field = 'X'
+            if str(self.request.user) == board.game.player_x.username:
+                board.third_field = 'X'
+            else:
+                board.third_field = 'O'
         elif field == 'fourth_field':
-            board.fourth_field = 'X'
+            if str(self.request.user) == board.game.player_x.username:
+                board.fourth_field = 'X'
+            else:
+                board.fourth_field = 'O'
         elif field == 'fifth_field':
-            board.fifth_field = 'X'
+            if str(self.request.user) == board.game.player_x.username:
+                board.fifth_field = 'X'
+            else:
+                board.fifth_field = 'O'
         elif field == 'sixth_field':
-            board.sixth_field = 'X'
+            if str(self.request.user) == board.game.player_x.username:
+                board.sixth_field = 'X'
+            else:
+                board.sixth_field = 'O'
         elif field == 'seventh_field':
-            board.seventh_field = 'O'
+            if str(self.request.user) == board.game.player_x.username:
+                board.seventh_field = 'X'
+            else:
+                board.seventh_field = 'O'
         elif field == 'eighth_field':
-            board.eighth_field = 'O'
+            if str(self.request.user) == board.game.player_x.username:
+                board.eighth_field = 'X'
+            else:
+                board.eighth_field = 'O'
         elif field == 'ninth_field':
-            board.ninth_field = 'O'
+            if str(self.request.user) == board.game.player_x.username:
+                board.ninth_field = 'X'
+            else:
+                board.ninth_field = 'O'
 
         return board
 
     def player_turn(self):
         pass
+
 
 @csrf_exempt
 @api_view(["POST"])
@@ -164,3 +269,16 @@ def login(request):
     token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key},
                     status=HTTP_200_OK)
+
+
+# TODO: odswiezenie nickow,
+
+# TODO: tura graczy, kolejkowac,
+
+# TODO: ID gry zamiast Board.objects.last()
+
+# TODO: zliczanie wygranych, czasu itd.
+
+# TODO: zabronic uzytkownikowi grac jesli nie ma 2 userow
+
+# TODO: wlasny url dla kazdego boardu: primary key(pk)

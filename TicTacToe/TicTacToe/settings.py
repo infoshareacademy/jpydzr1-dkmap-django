@@ -93,17 +93,20 @@ AUTH_USER_MODEL = 'player.CustomUser'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-DATABASES = {
-    'default': {
+try:
+    from .settings_local import DATABASES
 
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_postgres',
-        'USER': 'postgres',
-        'PASSWORD': DB_PASSWORD,
-        'HOST':  '127.0.0.1',
-        'PORT':  5432,
+except ImportError:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'production_db',
+            'USER': 'user',
+            'PASSWORD': 'password',
+            'HOST': 'db.example.com',
+            'PORT': '5432',
+        }
     }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

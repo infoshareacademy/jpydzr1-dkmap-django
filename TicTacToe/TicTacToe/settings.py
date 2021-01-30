@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     #my_apps:
     'game',
     'menu',
+    'player',
 
     #3rd party:
     'allauth',
@@ -85,6 +86,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'TicTacToe.wsgi.application'
 
+AUTH_USER_MODEL = 'player.CustomUser'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

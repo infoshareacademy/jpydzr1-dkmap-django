@@ -1,7 +1,7 @@
 
 {#formularz, django for loop counter #}
 
-<div class="board-container">
+<div id="board-container">
     <div class="board-row">
         <div class="board-field">
             <button class="board-button" id="first_field">
@@ -82,3 +82,9 @@
     </div>
 </div>
 
+
+{% block refresh_script %}
+
+<script>const refreshNewBoard = "{% url 'refresh_board' %}"</script>
+
+{% endblock refresh_script %}

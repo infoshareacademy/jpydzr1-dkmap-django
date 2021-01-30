@@ -4,27 +4,28 @@
 {% block content %}
 
     <div class="container">
+    <ul>
+        {% for board in open_games %}
+            <button onclick="joinBoard( {{ board.id }} )" id="create-board">JOIN {{ board }} </button>
+        {% endfor %}
+    </ul>
+
         <div class="container">
 
             <h4 style="margin-top: 15px;">Hi {{ request.user|capfirst }}! Good to see you. Please click 'START A NEW GAME'
             button and wait for another player to join your game or simply join your friend and have fun.
             Good luck!</h4>
-
         <div class="column-50">
             <h2>{{ user|capfirst }}</h2>
-            <p>Points: </p>
-
-            <h3>{{ request.user }}</h3>
-
+            <p>Points:</p>
+            <h3>{{ left_player_sign }}</h3>
         </div>
         <div class="column-50">
-            <h2>{{ user|capfirst }}</h2>
+            <h2 id="right-player">{{ right_player|capfirst }}</h2>
             <p>Points: </p>
-
-            <h3>{{ request.user }}</h3>
+            <h3>{{ right_player_sign }}</h3>
         </div>
             <button onclick="createBoard()" id="create-board">START A NEW GAME</button>
-            <button onclick="joinBoard()" id="create-board">JOIN A GAME</button>
 
     </div>
         <div class="column-100">

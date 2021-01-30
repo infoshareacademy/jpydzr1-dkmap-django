@@ -43,6 +43,30 @@ function createBoard() {
 })}
 
 
+let interval = window.setInterval(function(){
+    refreshBoard()
+}, 2000);
+
+function refreshBoard() {
+    $.ajax({
+        type: "GET",
+        url: refreshNewBoard,
+        data: {},
+        dataType: "json",
+        success: function(response) {
+            document.querySelector("#first_field").innerHTML = response["first_field"]
+            document.querySelector("#second_field").innerHTML = response["second_field"]
+            document.querySelector("#third_field").innerHTML = response["third_field"]
+            document.querySelector("#fourth_field").innerHTML = response["fourth_field"]
+            document.querySelector("#fifth_field").innerHTML = response["fifth_field"]
+            document.querySelector("#sixth_field").innerHTML = response["sixth_field"]
+            document.querySelector("#seventh_field").innerHTML = response["seventh_field"]
+            document.querySelector("#eighth_field").innerHTML = response["eighth_field"]
+            document.querySelector("#ninth_field").innerHTML = response["ninth_field"]
+        }
+    })
+}
+
 function updateBoard(button_id) {
     $.ajax({
         type: "PUT",
@@ -57,17 +81,17 @@ function updateBoard(button_id) {
         }
 })}
 
-function joinBoard() {
+function joinBoard(board_number) {
     $.ajax({
         type: 'PUT',
         url: joinNewBoard,
+        data: {'joined_board': board_number},
         dataType: 'json',
+        success: function (data){
 
-        success: function (){
-            alert('hej1')
         },
-        error: function () {
-            alert('hej2')
+        error: function (data) {
+
         },
     })}
 
@@ -89,4 +113,8 @@ function clearBoard(){
     $("#eighth_field").html("");
     $("#ninth_field").html("");
 }
+
+
+
+
 

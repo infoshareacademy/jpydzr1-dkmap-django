@@ -55,7 +55,7 @@ p:nth-child(odd){
     justify-content: center;
 }
 
-.board-container {
+#board-container {
     width: 385px;
     height: 395px;
     left: 134px;
@@ -155,6 +155,7 @@ p:nth-child(odd){
 }
 
 .CTA-button-auth{
+    align-content: center;
     font-size: 22px;
     font-family: 'Poppins', sans-serif;
     height: 40px;

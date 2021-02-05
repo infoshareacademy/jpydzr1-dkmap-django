@@ -7,6 +7,10 @@ board_choices = (('X', 'X'),
                  (' ', ' '),
                  )
 
+X_or_O = (('X', 'X'),
+          ('O', 'O')
+          )
+
 
 class Game(models.Model):
     player_x = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -51,7 +55,7 @@ class Board(models.Model):
     seventh_field = models.CharField(max_length=1, choices=board_choices, default=' ')
     eighth_field = models.CharField(max_length=1, choices=board_choices, default=' ')
     ninth_field = models.CharField(max_length=1, choices=board_choices, default=' ')
-
+    last_move = models.CharField(max_length=1, choices=X_or_O, blank=True)
 
     def __str__(self):
         return f"Board_{str(self.id)}"
@@ -100,7 +104,7 @@ class Board(models.Model):
                         ]
         index = 0
         for field in board_fields:
-            if field != '':
+            if field != ' ':
                 index += 1
 
         if index == 9:

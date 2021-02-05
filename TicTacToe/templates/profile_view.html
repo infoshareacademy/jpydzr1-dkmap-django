@@ -6,21 +6,9 @@
         <div class="column-100">
             {% include 'profile_statistics.html' %}
         </div>
-    </div>
-
-
-    <div class="container">
-        <div class="column-50">
-            <a href="{% url "board" %}">
-                <button class="CTA-button" type="button">Single Player</button>
-            </a>
-
-        </div>
-        <div class="column-50">
-            <a href="{% url "new-game-view" %}">
-                <button class="CTA-button" type="button">MultiPlayer</button>
-            </a>
-        </div>
+        <a href="{% url "list-board" %}">
+                <button class="CTA-button-auth" type="button">Start new game!</button>
+        </a>
     </div>
 
 {% endblock content %}

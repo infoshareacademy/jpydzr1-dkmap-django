@@ -1,8 +1,9 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import View
+from django.views.generic import View, ListView, DetailView
 from menu.models import PlayerStatistic
 from rest_framework import viewsets, status
 from .serializers import BoardSerializer
@@ -33,34 +34,49 @@ class ProfileView(View):
         return render(self.request, 'profile_view.html', context)
 
 
-class BoardView(View):
-    def get(self, request):
+class ListBoardView(ListView):
+    model = Board
+    context_object_name = 'all_current_boards'
+    template_name = 'list_board_view.html'
+    queryset = Board.objects.filter(game__in_progress=True).filter(
+                Q(game__player_o=None) | Q(game__player_x=None)).order_by('game')
 
-        logged_user = request.user
+
+class JoinGameBoardView(DetailView):
+    model = Board
+    template_name = 'game_board.html'
+
+    def get_context_data(self, **kwargs):
+
+        logged_user = self.request.user
+        pk = str(self.request).split('boards/')[1].split('/')[0]
 
         player_1 = str(logged_user)
-
-        player_2 = str(Board.objects.last().game.player_o)
+        player_2 = str(Board.objects.get(id=pk).game.player_o)
 
         if player_1 == player_2:
-            right_player = str(Board.objects.last().game.player_x)
+            if Board.objects.get(id=pk).game.player_x is None:
+                right_player = 'Waiting for player'
+            else:
+                right_player = str(Board.objects.get(id=pk).game.player_x)
+
             right_player_sign = 'X'
             left_player_sign = 'O'
         else:
-            right_player = str(Board.objects.last().game.player_o)
+            if Board.objects.get(id=pk).game.player_o is None:
+                right_player = 'Waiting for player'
+            else:
+                right_player = player_2
             right_player_sign = 'O'
             left_player_sign = 'X'
 
         context = {
-            'board': Board.objects.last(),
             'right_player': right_player,
             'right_player_sign': right_player_sign,
             'left_player_sign': left_player_sign,
-            'open_games': Board.objects.filter(game__in_progress=True).filter(
-                Q(game__player_o=None) | Q(game__player_x=None)).order_by('game')
         }
 
-        return render(self.request, 'board_view.html', context)
+        return context
 
 
 class ApiView(viewsets.ModelViewSet):
@@ -101,7 +117,9 @@ class RefreshBoard(APIView):
     def get(self, request):
         try:
             user = self.request.user
-            board = Board.objects.filter(game__in_progress=True).filter(Q(game__player_o=user) | Q(game__player_x=user)).last()
+            board_id = str(self.request._request).split('boards%2F')[1].split('%2F')[0]
+
+            board = Board.objects.get(id=board_id)
             if board is None:
                 return Response(data=board)
 
@@ -127,11 +145,20 @@ class JoinBoard(APIView):
             board = Board.objects.get(id=board_number)
 
             if board.game.player_x is None:
-                board.game.player_x = user
+                if str(board.game.player_o) == str(user.username):
+                    pass
+                else:
+                    board.game.player_x = user
+
             elif board.game.player_o is None:
-                board.game.player_o = user
+                if str(board.game.player_x) == str(user.username):
+                    pass
+                else:
+                    board.game.player_o = user
+
             else:
                 pass
+
             board.game.save()
 
         except:
@@ -165,7 +192,9 @@ class UpdateBoard(APIView):
     def put(self, request):
         try:
             user = self.request.user
-            board = Board.objects.filter(game__in_progress=True).filter(Q(game__player_o=user) | Q(game__player_x=user)).last()
+            board_id = self.request.data['board_id'].split('boards/')[1].split('/')[0]
+
+            board = Board.objects.get(id=board_id)
             field = self.request.data['button_id']
 
             # Empty field check:
@@ -179,15 +208,17 @@ class UpdateBoard(APIView):
             if win:
                 board.game.win = True
                 board.game.in_progress = False
+                self.message_for_user('win')
             else:
                 tie = check_if_board_is_full(board)
                 if tie:
                     board.game.in_progress = False
+                    self.message_for_user('tie')
 
             board.game.save()
-
         except:
             raise ValueError('Wrong input data. Try again.')
+
         if request.method == 'PUT':
             serializer = BoardSerializer(board, data=self.request.data)
             data = {}
@@ -199,58 +230,107 @@ class UpdateBoard(APIView):
                 print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def field_input(self, board, field):
+    def message_for_user(self, state):
+        messages.warning(self.request, state)
+        return redirect('game-board', 528)
 
+    def field_input(self, board, field):
         if field == 'first_field':
             if str(self.request.user) == board.game.player_x.username:
-                board.first_field = 'X'
-            else:
-                board.first_field = 'O'
+                if self.last_move_validation(board, 'X'):
+                    board.first_field = 'X'
+                    board.last_move = 'X'
+            elif str(self.request.user) == board.game.player_o.username:
+                if self.last_move_validation(board, 'O'):
+                    board.first_field = 'O'
+                    board.last_move = 'O'
+
         elif field == 'second_field':
             if str(self.request.user) == board.game.player_x.username:
-                board.second_field = 'X'
-            else:
-                board.second_field = 'O'
+                if self.last_move_validation(board, 'X'):
+                    board.second_field = 'X'
+                    board.last_move = 'X'
+            elif str(self.request.user) == board.game.player_o.username:
+                if self.last_move_validation(board, 'O'):
+                    board.second_field = 'O'
+                    board.last_move = 'O'
+
         elif field == 'third_field':
             if str(self.request.user) == board.game.player_x.username:
-                board.third_field = 'X'
-            else:
-                board.third_field = 'O'
+                if self.last_move_validation(board, 'X'):
+                    board.third_field = 'X'
+                    board.last_move = 'X'
+            elif str(self.request.user) == board.game.player_o.username:
+                if self.last_move_validation(board, 'O'):
+                    board.third_field = 'O'
+                    board.last_move = 'O'
+
         elif field == 'fourth_field':
             if str(self.request.user) == board.game.player_x.username:
-                board.fourth_field = 'X'
-            else:
-                board.fourth_field = 'O'
+                if self.last_move_validation(board, 'X'):
+                    board.fourth_field = 'X'
+                    board.last_move = 'X'
+            elif str(self.request.user) == board.game.player_o.username:
+                if self.last_move_validation(board, 'O'):
+                    board.fourth_field = 'O'
+                    board.last_move = 'O'
+
         elif field == 'fifth_field':
             if str(self.request.user) == board.game.player_x.username:
-                board.fifth_field = 'X'
-            else:
-                board.fifth_field = 'O'
+                if self.last_move_validation(board, 'X'):
+                    board.fifth_field = 'X'
+                    board.last_move = 'X'
+            elif str(self.request.user) == board.game.player_o.username:
+                if self.last_move_validation(board, 'O'):
+                    board.fifth_field = 'O'
+                    board.last_move = 'O'
+
         elif field == 'sixth_field':
             if str(self.request.user) == board.game.player_x.username:
-                board.sixth_field = 'X'
-            else:
-                board.sixth_field = 'O'
+                if self.last_move_validation(board, 'X'):
+                    board.sixth_field = 'X'
+                    board.last_move = 'X'
+            elif str(self.request.user) == board.game.player_o.username:
+                if self.last_move_validation(board, 'O'):
+                    board.sixth_field = 'O'
+                    board.last_move = 'O'
+
         elif field == 'seventh_field':
             if str(self.request.user) == board.game.player_x.username:
-                board.seventh_field = 'X'
-            else:
-                board.seventh_field = 'O'
+                if self.last_move_validation(board, 'X'):
+                    board.seventh_field = 'X'
+                    board.last_move = 'X'
+            elif str(self.request.user) == board.game.player_o.username:
+                if self.last_move_validation(board, 'O'):
+                    board.seventh_field = 'O'
+                    board.last_move = 'O'
+
         elif field == 'eighth_field':
             if str(self.request.user) == board.game.player_x.username:
-                board.eighth_field = 'X'
-            else:
-                board.eighth_field = 'O'
+                if self.last_move_validation(board, 'X'):
+                    board.eighth_field = 'X'
+                    board.last_move = 'X'
+            elif str(self.request.user) == board.game.player_o.username:
+                if self.last_move_validation(board, 'O'):
+                    board.eighth_field = 'O'
+                    board.last_move = 'O'
+
         elif field == 'ninth_field':
             if str(self.request.user) == board.game.player_x.username:
-                board.ninth_field = 'X'
-            else:
-                board.ninth_field = 'O'
-
+                if self.last_move_validation(board, 'X'):
+                    board.ninth_field = 'X'
+                    board.last_move = 'X'
+            elif str(self.request.user) == board.game.player_o.username:
+                if self.last_move_validation(board, 'O'):
+                    board.ninth_field = 'O'
+                    board.last_move = 'O'
         return board
 
-    def player_turn(self):
-        pass
+    @staticmethod
+    def last_move_validation(board, sign):
+        if board.last_move != sign:
+            return True
+        return False
 
 
 @csrf_exempt
@@ -271,14 +351,12 @@ def login(request):
                     status=HTTP_200_OK)
 
 
-# TODO: odswiezenie nickow,
-
-# TODO: tura graczy, kolejkowac,
-
-# TODO: ID gry zamiast Board.objects.last()
+# TODO: odswiezenie nickow, ??
 
 # TODO: zliczanie wygranych, czasu itd.
 
-# TODO: zabronic uzytkownikowi grac jesli nie ma 2 userow
+# TODO: NoneType Error jak zaczynamy kolkiem ??
 
-# TODO: wlasny url dla kazdego boardu: primary key(pk)
+# TODO: testy,
+
+# TODO: heroku,

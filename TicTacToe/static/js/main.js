@@ -48,10 +48,12 @@ let interval = window.setInterval(function(){
 }, 2000);
 
 function refreshBoard() {
+    let board_id = window.location.href
+
     $.ajax({
         type: "GET",
         url: refreshNewBoard,
-        data: {},
+        data: {'board_id': board_id},
         dataType: "json",
         success: function(response) {
             document.querySelector("#first_field").innerHTML = response["first_field"]
@@ -68,11 +70,14 @@ function refreshBoard() {
 }
 
 function updateBoard(button_id) {
+    let board_id = window.location.href
+
     $.ajax({
         type: "PUT",
         url: newUpdateBoard,
-        data: {'button_id': button_id},
+        data: {'button_id': button_id, 'board_id': board_id},
         dataType: 'json',
+        async: false,
         success: function(data) {
             document.querySelector(`#${button_id}`).innerHTML = data[button_id]
           },
@@ -113,8 +118,4 @@ function clearBoard(){
     $("#eighth_field").html("");
     $("#ninth_field").html("");
 }
-
-
-
-
 

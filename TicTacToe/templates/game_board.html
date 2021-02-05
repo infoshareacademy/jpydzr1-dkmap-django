@@ -4,17 +4,16 @@
 {% block content %}
 
     <div class="container">
-    <ul>
-        {% for board in open_games %}
-            <button onclick="joinBoard( {{ board.id }} )" id="create-board">JOIN {{ board }} </button>
-        {% endfor %}
-    </ul>
-
         <div class="container">
+            <h4 style="margin-top: 15px;">Hi {{ request.user|capfirst }}! Good to see you. Good luck!</h4>
 
-            <h4 style="margin-top: 15px;">Hi {{ request.user|capfirst }}! Good to see you. Please click 'START A NEW GAME'
-            button and wait for another player to join your game or simply join your friend and have fun.
-            Good luck!</h4>
+            {% if messages %}
+                {% for message in messages %}
+                <h5 class="poppins-font-paragraph text-center pt-3"> {{ message }} </h5>
+                {% endfor %}
+            {% endif %}
+
+        </div>
         <div class="column-50">
             <h2>{{ user|capfirst }}</h2>
             <p>Points:</p>
@@ -25,7 +24,6 @@
             <p>Points: </p>
             <h3>{{ right_player_sign }}</h3>
         </div>
-            <button onclick="createBoard()" id="create-board">START A NEW GAME</button>
 
     </div>
         <div class="column-100">

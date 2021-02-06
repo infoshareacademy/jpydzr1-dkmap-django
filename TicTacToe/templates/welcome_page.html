@@ -4,7 +4,15 @@
 {% block content %}
 
     <div class="container">
+
         <div class="column-70">
+            <div>
+            {% if messages %}
+                {% for message in messages %}<h3 class="poppins-font-paragraph text-center pt-3"> {{ message }} </h3>
+                {% endfor %}
+            {% endif %}
+            </div>
+
             <img class="responsive" src="{% static 'img/tictac.png' %}">
 
         </div>

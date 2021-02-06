@@ -325,6 +325,11 @@ section{
     border: solid 1px white;
 }
 
+.signup-message{
+    color: #d5160c;
+    padding-bottom: 20px;
+}
+
 @media screen and (max-width: 800px) {
 
     .line {

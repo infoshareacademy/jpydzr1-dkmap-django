@@ -1,4 +1,7 @@
 from django.contrib import admin
-from player.models import CustomUser
+from .models import CustomUser
 
-admin.site.register(CustomUser)
+
+@admin.register(CustomUser)
+class HouseAdmin(admin.ModelAdmin):
+    pass

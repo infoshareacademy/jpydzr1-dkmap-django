@@ -1,6 +1,10 @@
 from django.contrib import admin
-from menu.models import PlayerStatistic
+from .models import PlayerStatistic
 
-admin.site.register(PlayerStatistic)
+admin.site.site_header = 'TicTacToe'
 
+
+@admin.register(PlayerStatistic)
+class HouseAdmin(admin.ModelAdmin):
+    pass
 

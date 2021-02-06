@@ -55,6 +55,30 @@ p:nth-child(odd){
     justify-content: center;
 }
 
+#board-container {
+    width: 385px;
+    height: 395px;
+    left: 134px;
+    top: 49px;
+    background: #D32F2F;
+}
+
+.board-row{
+    display: flex;
+    flex-direction: row;
+    padding: 2px;
+}
+
+.board-field{
+    margin: 2px;
+    width: 123px;
+    height: 123px;
+    left: 143px;
+    top: 56px;
+    background: #ECCF37;
+}
+
+
 .column-100{
     padding: 35px 0 15px 0;
     display: flex;
@@ -65,6 +89,10 @@ p:nth-child(odd){
 .column-50{
     flex: 1 50%;
     padding: 50px 50px 50px 50px;
+}
+
+.column-50 h3, p, h2{
+    text-align: center;
 }
 
 .column-70{
@@ -127,6 +155,7 @@ p:nth-child(odd){
 }
 
 .CTA-button-auth{
+    align-content: center;
     font-size: 22px;
     font-family: 'Poppins', sans-serif;
     height: 40px;
@@ -213,7 +242,68 @@ p:nth-child(odd){
     padding-left: 15px;
 }
 
-.danger-button{
+section{
+    background: #ffffff;
+    text-align: center;
+    padding: 100px 20px 100px 20px;
+    color: black;
+}
+
+.message-box{
+    font-family: 'Poppins', sans-serif;
+    padding: 5px;
+    margin-left: 30px;
+    font-size: 20px;
+}
+
+.board-button{
+  margin: 1px;
+  width: 120px;
+  height: 120px;
+  border: 2px black solid;
+  text-align: center;
+  font-weight: bold;
+  font-family:  Cursive, Ubuntu, Roboto, Arial, sans-serif;
+  font-size: 100px;
+  cursor: pointer;
+}
+
+.welcome-text{
+    text-align: center;
+    padding: 20px;
+    color: #d5160c;
+    background-color: #69B15D;
+    border-radius: 0 0 10px 25px;
+    margin-bottom: 15px;
+}
+
+#join-board{
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    height: 25px;
+    width: auto;
+    color: #fff;
+    background-color: #6BBFEF;
+    border-radius: 10px;
+    border: solid 1px #fff;
+    cursor: pointer;
+    margin: 5px 20px 5px 20px;
+    padding-right: 22px;
+    padding-left: 22px;
+}
+
+.column-70 ul li{
+    list-style-type: none;
+}
+
+#join-board:hover{
+    transform: scale(1.1);
+    transition: ease 0.7s;
+    color: #FFD700;
+    border: solid 1px white;
+}
+
+#create-board{
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
     height: 45px;
@@ -228,82 +318,17 @@ p:nth-child(odd){
     padding-left: 22px;
 }
 
-.danger-button:hover{
+#create-board:hover{
     transform: scale(1.1);
     transition: ease 0.7s;
     color: #FFD700;
     border: solid 1px white;
 }
 
-section{
-    background: #ffffff;
-    text-align: center;
-    padding: 100px 20px 100px 20px;
-    color: black;
+.signup-message{
+    color: #d5160c;
+    padding-bottom: 20px;
 }
-
-section1{
-    background: linear-gradient(to right, #17981a, 90%, #fff);
-    opacity: 70%;
-    display: block;
-    padding: 5px;
-}
-
-.message-box{
-    font-family: 'Poppins', sans-serif;
-    padding: 5px;
-    margin-left: 30px;
-    font-size: 20px;
-}
-
-.week-cart{
-    display: flex;
-    padding: 10px;
-    justify-content: center;
-}
-
-.day-cart{
-    margin-top:20px;
-}
-
-
-.task-cart {
-    padding: 7px;
-    margin: 5px;
-    text-align: left;
-}
-
-.form-control{
-    margin-bottom: 10px;
-    display: inline-block;
-    align-items: center;
-}
-
-
-.form-container{
-    padding: 20px;
-}
-
-.delete-job-button{
-    padding-bottom: 35px;
-}
-
-.delete-button{
-    background: #ffcc66;
-    padding: 5px 15px 5px 15px;
-    border-radius: 4px;
-    font-family: 'Poppins', sans-serif;
-}
-
-.delete-button:hover{
-    transform: scale(1.1);
-    transition: ease 0.7s;
-}
-
-.capitalize{
-    text-transform: capitalize;
-}
-
 
 @media screen and (max-width: 800px) {
 

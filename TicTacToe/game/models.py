@@ -56,6 +56,7 @@ class Board(models.Model):
     eighth_field = models.CharField(max_length=1, choices=board_choices, default=' ')
     ninth_field = models.CharField(max_length=1, choices=board_choices, default=' ')
     last_move = models.CharField(max_length=1, choices=X_or_O, blank=True)
+    end_game = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Board_{str(self.id)}"
@@ -113,40 +114,31 @@ class Board(models.Model):
 
     def check_if_field_is_empty(self, field) -> bool:
         """Method which check if field is empty."""
+        board_fields = [self.first_field,
+                        self.second_field,
+                        self.third_field,
+                        self.fourth_field,
+                        self.fifth_field,
+                        self.sixth_field,
+                        self.seventh_field,
+                        self.eighth_field,
+                        self.ninth_field
+                        ]
 
-        if field == 'first_field':
-            if self.first_field == ' ':
-                return True
-            return False
-        elif field == 'second_field':
-            if self.second_field == ' ':
-                return True
-            return False
-        elif field == 'third_field':
-            if self.third_field == ' ':
-                return True
-            return False
-        elif field == 'fourth_field':
-            if self.fourth_field == ' ':
-                return True
-            return False
-        elif field == 'fifth_field':
-            if self.fifth_field == ' ':
-                return True
-            return False
-        elif field == 'sixth_field':
-            if self.sixth_field == ' ':
-                return True
-            return False
-        elif field == 'seventh_field':
-            if self.seventh_field == ' ':
-                return True
-            return False
-        elif field == 'eighth_field':
-            if self.eighth_field == ' ':
-                return True
-            return False
-        elif field == 'ninth_field':
-            if self.ninth_field == ' ':
-                return True
-            return False
+        board_number = {'first_field': 0,
+                        'second_field': 1,
+                        'third_field': 2,
+                        'fourth_field': 3,
+                        'fifth_field': 4,
+                        'sixth_field': 5,
+                        'seventh_field': 6,
+                        'eighth_field': 7,
+                        'ninth_field': 8
+                        }
+
+        for element in board_number.items():
+            if field == element[0]:
+                current_field = board_fields[element[1]]
+                if current_field == ' ':
+                    return True
+                return False

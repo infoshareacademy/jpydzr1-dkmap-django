@@ -2,12 +2,14 @@ from django.db import models
 from django.conf import settings
 
 
-board_choices = (('X', 'X'),
+board_choices = (
+                 ('X', 'X'),
                  ('O', 'O'),
                  (' ', ' '),
                  )
 
-X_or_O = (('X', 'X'),
+X_or_O = (
+          ('X', 'X'),
           ('O', 'O')
           )
 

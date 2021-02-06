@@ -208,12 +208,10 @@ class UpdateBoard(APIView):
             if win:
                 board.game.win = True
                 board.game.in_progress = False
-                self.message_for_user('win')
             else:
                 tie = check_if_board_is_full(board)
                 if tie:
                     board.game.in_progress = False
-                    self.message_for_user('tie')
 
             board.game.save()
         except:
@@ -235,8 +233,48 @@ class UpdateBoard(APIView):
         return redirect('game-board', 528)
 
     def field_input(self, board, field):
+
+        # board_fields = [board.first_field,
+        #                 board.second_field,
+        #                 board.third_field,
+        #                 board.fourth_field,
+        #                 board.fifth_field,
+        #                 board.sixth_field,
+        #                 board.seventh_field,
+        #                 board.eighth_field,
+        #                 board.ninth_field
+        #                 ]
+        #
+        # board_number = {'first_field': 0,
+        #                 'second_field': 1,
+        #                 'third_field': 2,
+        #                 'fourth_field': 3,
+        #                 'fifth_field': 4,
+        #                 'sixth_field': 5,
+        #                 'seventh_field': 6,
+        #                 'eighth_field': 7,
+        #                 'ninth_field': 8
+        #                 }
+        #
+        # for element in board_number.items():
+        #     if field == element[0]:
+        #         if self.two_players_on_board_validation(board):
+        #             pass
+        #         elif str(self.request.user) == board.game.player_x.username:
+        #             if self.last_move_validation(board, 'X'):
+        #                 board_fields[element[1]] = 'X'
+        #                 board.last_move = 'X'
+        #
+        #         elif str(self.request.user) == board.game.player_o.username:
+        #             if self.last_move_validation(board, 'O'):
+        #                 board_fields[element[1]] = 'O'
+        #                 board.last_move = 'O'
+        # return board
+
         if field == 'first_field':
-            if str(self.request.user) == board.game.player_x.username:
+            if self.two_players_on_board_validation(board):
+                pass
+            elif str(self.request.user) == board.game.player_x.username:
                 if self.last_move_validation(board, 'X'):
                     board.first_field = 'X'
                     board.last_move = 'X'
@@ -246,7 +284,9 @@ class UpdateBoard(APIView):
                     board.last_move = 'O'
 
         elif field == 'second_field':
-            if str(self.request.user) == board.game.player_x.username:
+            if self.two_players_on_board_validation(board):
+                pass
+            elif str(self.request.user) == board.game.player_x.username:
                 if self.last_move_validation(board, 'X'):
                     board.second_field = 'X'
                     board.last_move = 'X'
@@ -256,7 +296,9 @@ class UpdateBoard(APIView):
                     board.last_move = 'O'
 
         elif field == 'third_field':
-            if str(self.request.user) == board.game.player_x.username:
+            if self.two_players_on_board_validation(board):
+                pass
+            elif str(self.request.user) == board.game.player_x.username:
                 if self.last_move_validation(board, 'X'):
                     board.third_field = 'X'
                     board.last_move = 'X'
@@ -266,7 +308,9 @@ class UpdateBoard(APIView):
                     board.last_move = 'O'
 
         elif field == 'fourth_field':
-            if str(self.request.user) == board.game.player_x.username:
+            if self.two_players_on_board_validation(board):
+                pass
+            elif str(self.request.user) == board.game.player_x.username:
                 if self.last_move_validation(board, 'X'):
                     board.fourth_field = 'X'
                     board.last_move = 'X'
@@ -276,7 +320,9 @@ class UpdateBoard(APIView):
                     board.last_move = 'O'
 
         elif field == 'fifth_field':
-            if str(self.request.user) == board.game.player_x.username:
+            if self.two_players_on_board_validation(board):
+                pass
+            elif str(self.request.user) == board.game.player_x.username:
                 if self.last_move_validation(board, 'X'):
                     board.fifth_field = 'X'
                     board.last_move = 'X'
@@ -286,7 +332,9 @@ class UpdateBoard(APIView):
                     board.last_move = 'O'
 
         elif field == 'sixth_field':
-            if str(self.request.user) == board.game.player_x.username:
+            if self.two_players_on_board_validation(board):
+                pass
+            elif str(self.request.user) == board.game.player_x.username:
                 if self.last_move_validation(board, 'X'):
                     board.sixth_field = 'X'
                     board.last_move = 'X'
@@ -296,7 +344,9 @@ class UpdateBoard(APIView):
                     board.last_move = 'O'
 
         elif field == 'seventh_field':
-            if str(self.request.user) == board.game.player_x.username:
+            if self.two_players_on_board_validation(board):
+                pass
+            elif str(self.request.user) == board.game.player_x.username:
                 if self.last_move_validation(board, 'X'):
                     board.seventh_field = 'X'
                     board.last_move = 'X'
@@ -306,7 +356,9 @@ class UpdateBoard(APIView):
                     board.last_move = 'O'
 
         elif field == 'eighth_field':
-            if str(self.request.user) == board.game.player_x.username:
+            if self.two_players_on_board_validation(board):
+                pass
+            elif str(self.request.user) == board.game.player_x.username:
                 if self.last_move_validation(board, 'X'):
                     board.eighth_field = 'X'
                     board.last_move = 'X'
@@ -316,7 +368,9 @@ class UpdateBoard(APIView):
                     board.last_move = 'O'
 
         elif field == 'ninth_field':
-            if str(self.request.user) == board.game.player_x.username:
+            if self.two_players_on_board_validation(board):
+                pass
+            elif str(self.request.user) == board.game.player_x.username:
                 if self.last_move_validation(board, 'X'):
                     board.ninth_field = 'X'
                     board.last_move = 'X'
@@ -329,6 +383,12 @@ class UpdateBoard(APIView):
     @staticmethod
     def last_move_validation(board, sign):
         if board.last_move != sign:
+            return True
+        return False
+
+    @staticmethod
+    def two_players_on_board_validation(board):
+        if board.game.player_x is None or board.game.player_o is None:
             return True
         return False
 
@@ -355,8 +415,8 @@ def login(request):
 
 # TODO: zliczanie wygranych, czasu itd.
 
-# TODO: NoneType Error jak zaczynamy kolkiem ??
-
 # TODO: testy,
 
 # TODO: heroku,
+
+# TODO: logowanie,

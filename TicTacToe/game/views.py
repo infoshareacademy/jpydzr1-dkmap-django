@@ -420,3 +420,7 @@ def login(request):
 # TODO: heroku,
 
 # TODO: logowanie,
+
+# TODO: websocket,
+
+# TODO: limit czasu na ruch

@@ -12,4 +12,4 @@ class PlayerStatistic(models.Model):
     lose_counter = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.user.username
+        return f"Statistics: {self.user.username}"

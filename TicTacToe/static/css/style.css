@@ -216,6 +216,10 @@ p:nth-child(odd){
     font-size: 14px;
 }
 
+a {
+    text-decoration: none;
+}
+
 .about-in-2 p{
     text-align: left;
 }

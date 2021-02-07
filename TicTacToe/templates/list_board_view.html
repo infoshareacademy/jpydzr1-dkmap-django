@@ -18,7 +18,20 @@
             <ul>
                 {% if all_current_boards %}
                 {% for board in all_current_boards %}
-                    <li>{{ board.game.player_x }}<a href="{{ board.id }}"><button onclick="joinBoard({{ board.id }})" id="join-board">JOIN {{ board }}</button></a>{{ board.game.player_o }}</li>
+                    {% if board.game.player_x is None %}
+                    <li>free space
+                        {% else %}
+                        <li>{{ board.game.player_x|capfirst }}
+                        {% endif %}
+                        <a href="{{ board.id }}"><button onclick="joinBoard({{ board.id }})" id="join-board">JOIN {{ board }}</button>
+                            {% if board.game.player_o is None %}
+
+                        </a>free space</li>
+                    {% else %}
+
+                        </a>{{ board.game.player_o|capfirst }}</li>
+
+                    {% endif %}
                 {% endfor %}
                 {% else %}
                 <p>There is no games in progress. Please create one if you would like to play.</p>

@@ -2,42 +2,51 @@ from django.db import models
 from django.conf import settings
 
 
-board_choices = (('X', 'X'),
-                 ('O', 'O'),
-                 (' ', ' '),
-                 )
+board_choices = (
+    ('X', 'X'),
+    ('O', 'O'),
+    (' ', ' '),
+    )
 
-X_or_O = (('X', 'X'),
-          ('O', 'O')
-          )
+X_or_O = (
+    ('X', 'X'),
+    ('O', 'O')
+    )
 
 
 class Game(models.Model):
-    player_x = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                 related_name="player_x_games",
-                                 on_delete=models.CASCADE,
-                                 blank=True,
-                                 null=True
-                                 )
-    player_o = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                 related_name="player_o_games",
-                                 on_delete=models.CASCADE,
-                                 blank=True,
-                                 null=True
-                                 )
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                   related_name='created_games',
-                                   on_delete=models.CASCADE,
-                                   null=True,
-                                   blank=True
-                                   )
+    player_x = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="player_x_games",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+        )
+    player_o = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="player_o_games",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+        )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='created_games',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+        )
     in_progress = models.BooleanField(default=True)
     win = models.BooleanField(default=False)
     start_time = models.DateTimeField(auto_now_add=True, blank=True)
     finish_time = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.start_time} - {self.player_x}"
+        if self.in_progress:
+            state = 'not finished'
+        else:
+            state = 'finished'
+        return f"Game {self.id} - {state}"
 
 
 # class GameSession(models.Model):
@@ -59,7 +68,7 @@ class Board(models.Model):
     end_game = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Board_{str(self.id)}"
+        return f"Board {str(self.id)}"
 
     def win_board(self) -> bool:
         """Function which check board state, check if win condition has been met.
@@ -114,27 +123,29 @@ class Board(models.Model):
 
     def check_if_field_is_empty(self, field) -> bool:
         """Method which check if field is empty."""
-        board_fields = [self.first_field,
-                        self.second_field,
-                        self.third_field,
-                        self.fourth_field,
-                        self.fifth_field,
-                        self.sixth_field,
-                        self.seventh_field,
-                        self.eighth_field,
-                        self.ninth_field
-                        ]
+        board_fields = [
+            self.first_field,
+            self.second_field,
+            self.third_field,
+            self.fourth_field,
+            self.fifth_field,
+            self.sixth_field,
+            self.seventh_field,
+            self.eighth_field,
+            self.ninth_field
+            ]
 
-        board_number = {'first_field': 0,
-                        'second_field': 1,
-                        'third_field': 2,
-                        'fourth_field': 3,
-                        'fifth_field': 4,
-                        'sixth_field': 5,
-                        'seventh_field': 6,
-                        'eighth_field': 7,
-                        'ninth_field': 8
-                        }
+        board_number = {
+            'first_field': 0,
+            'second_field': 1,
+            'third_field': 2,
+            'fourth_field': 3,
+            'fifth_field': 4,
+            'sixth_field': 5,
+            'seventh_field': 6,
+            'eighth_field': 7,
+            'ninth_field': 8
+            }
 
         for element in board_number.items():
             if field == element[0]:

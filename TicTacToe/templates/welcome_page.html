@@ -13,6 +13,12 @@
             {% endif %}
             </div>
 
+            {% if request.user.is_authenticated %}
+            {% if session %}
+            <h3>Last visited board: {{ session }}</h3>
+            {% endif %}
+            {% endif %}
+
             <img class="responsive" src="{% static 'img/tictac.png' %}">
 
         </div>

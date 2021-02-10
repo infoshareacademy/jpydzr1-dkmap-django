@@ -76,6 +76,8 @@ class JoinGameBoardView(DetailView):
             'left_player_sign': left_player_sign,
         }
 
+        self.request.session['last_visited_board'] = pk
+
         return context
 
 
@@ -420,3 +422,7 @@ def login(request):
 # TODO: heroku,
 
 # TODO: logowanie,
+
+# TODO: websocket,
+
+# TODO: limit czasu na ruch

@@ -65,6 +65,7 @@ function refreshBoard() {
             document.querySelector("#seventh_field").innerHTML = response["seventh_field"]
             document.querySelector("#eighth_field").innerHTML = response["eighth_field"]
             document.querySelector("#ninth_field").innerHTML = response["ninth_field"]
+            document.querySelector("#last_move").innerHTML = response["last_move"]
         }
     })
 }

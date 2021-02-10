@@ -13,7 +13,6 @@ X_or_O = (
     ('O', 'O')
     )
 
-
 class Game(models.Model):
     player_x = models.ForeignKey(
         settings.AUTH_USER_MODEL,

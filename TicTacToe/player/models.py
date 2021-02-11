@@ -12,7 +12,7 @@ class CustomUser(AbstractUser):
         group = Group.objects.get(name='Users')
 
         try:
-            PlayerStatistic.objects.create(user=self)
+            PlayerStatistic.objects.get_or_create(user=self)
         except IntegrityError as e:
             db_logger.error("duplicate key value violates unique constraint", exc_info=True)
 

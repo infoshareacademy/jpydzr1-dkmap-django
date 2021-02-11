@@ -13,3 +13,13 @@ class PlayerStatistic(models.Model):
 
     def __str__(self):
         return f"Statistics: {self.user.username}"
+
+    def add_win(self) -> int:
+        self.win_counter += 1
+        self.save()
+        return self.win_counter
+
+    def add_game(self) -> int:
+        self.game_counter += 1
+        self.save()
+        return self.game_counter

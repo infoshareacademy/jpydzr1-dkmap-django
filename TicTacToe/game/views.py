@@ -127,6 +127,7 @@ class RefreshBoard(APIView):
 
         except:
             raise ValueError('Wrong input data. Try again.')
+
         if request.method == 'GET':
             serializer = BoardSerializer(board, data=self.request.data)
             data = {}
@@ -210,12 +211,14 @@ class UpdateBoard(APIView):
             if win:
                 board.game.win = True
                 board.game.in_progress = False
+                self.update_player_statistics(user, 'win')
             else:
                 tie = check_if_board_is_full(board)
                 if tie:
                     board.game.in_progress = False
 
             board.game.save()
+
         except:
             raise ValueError('Wrong input data. Try again.')
 
@@ -230,11 +233,17 @@ class UpdateBoard(APIView):
                 print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @staticmethod
+    def update_player_statistics(user, statistic) -> None:
+        user_stats = PlayerStatistic.objects.get(user=user)
+        if statistic == 'win':
+            user_stats.add_win()
+
     def message_for_user(self, state):
         messages.warning(self.request, state)
         return redirect('game-board', 528)
 
-    def field_input(self, board, field):
+    def field_input(self, board, field) -> Board:
 
         # board_fields = [board.first_field,
         #                 board.second_field,

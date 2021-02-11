@@ -42,12 +42,8 @@ class Game(models.Model):
     finish_time = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        if self.in_progress:
-            state = 'not finished'
-        else:
-            state = 'finished'
+        state = 'finished' if self.in_progress else 'not finished'
         return f"Game {self.id} - {state}"
-
 
 # class GameSession(models.Model):
 #     games = models.ForeignKey(Game, on_delete=models.PROTECT)
@@ -68,7 +64,7 @@ class Board(models.Model):
     end_game = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Board {str(self.id)}"
+        return f"Board {self.id}"
 
     def win_board(self) -> bool:
         """Function which check board state, check if win condition has been met.

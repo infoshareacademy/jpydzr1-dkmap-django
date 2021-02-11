@@ -177,6 +177,7 @@ FIXTURE_DIRS = [BASE_DIR]
 # Session configuration:
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
+
 # Logging configuration
 LOGGING = {
     'version': 1,

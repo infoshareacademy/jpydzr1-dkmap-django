@@ -8,8 +8,8 @@ class WelcomeView(TemplateView):
 
         try:
             session_element = self.request.session['last_visited_board']
-        except:
-            session_element = "You haven't played yet."
+        except KeyError:
+             session_element = "You haven't played yet."
 
         context = {
             'session': session_element,

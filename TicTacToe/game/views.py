@@ -39,7 +39,7 @@ class ListBoardView(ListView):
     context_object_name = 'all_current_boards'
     template_name = 'list_board_view.html'
     queryset = Board.objects.filter(game__in_progress=True).filter(
-                Q(game__player_o=None) | Q(game__player_x=None)).order_by('game')
+        Q(game__player_o=None) | Q(game__player_x=None)).order_by('game')
 
 
 class JoinGameBoardView(DetailView):
@@ -411,7 +411,6 @@ def login(request):
     token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key},
                     status=HTTP_200_OK)
-
 
 # TODO: odswiezenie nickow, ??
 

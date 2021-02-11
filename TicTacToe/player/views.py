@@ -1,17 +1,15 @@
 from allauth.account.utils import complete_signup
-from allauth.account.views import LoginView, SignupView
+from allauth.account.views import LoginView, SignupView, LogoutView
 from allauth.account import app_settings
+from allauth.account.views import _ajax_response
 import logging
 from allauth.exceptions import ImmediateHttpResponse
-
+from django.shortcuts import redirect
 
 db_logger = logging.getLogger('db')
 
 
-class OurLoginView(LoginView):
-
-    def __init__(self):
-        super(OurLoginView, self).__init__()
+class CustomLoginView(LoginView):
 
     def form_valid(self, form):
         success_url = self.get_success_url()
@@ -28,10 +26,7 @@ class OurLoginView(LoginView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class OurSignUpView(SignupView):
-
-    def __init__(self):
-        super(OurSignUpView, self).__init__()
+class CustomSignUpView(SignupView):
 
     def form_valid(self, form):
         # By assigning the User to a property on the view, we allow subclasses
@@ -51,6 +46,17 @@ class OurSignUpView(SignupView):
     def form_invalid(self, form):
         """If the form is invalid, render the invalid form."""
         error_message = str(form.errors).split('<li>')[2].split('</li></ul>')[0]
-        db_logger.warning(f'Account not created for username: {form.cleaned_data["username"]} - {error_message}')
+        db_logger.warning(f'Account not created for username: {form.data["username"]} - {error_message}')
         return self.render_to_response(self.get_context_data(form=form))
 
+
+class CustomLogoutView(LogoutView):
+
+    def post(self, *args, **kwargs):
+        url = self.get_redirect_url()
+        if self.request.user.is_authenticated:
+            logout_user = self.request.user
+            db_logger.info(f'Successfully logged out user - {logout_user}')
+            self.logout()
+        response = redirect(url)
+        return _ajax_response(self.request, response)

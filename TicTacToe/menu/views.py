@@ -9,13 +9,14 @@ class WelcomeView(TemplateView):
         try:
             session_element = self.request.session['last_visited_board']
         except KeyError:
-             session_element = "You haven't played yet."
+            session_element = "You haven't played yet."
 
         context = {
             'session': session_element,
         }
 
         return render(request, 'welcome_page.html', context)
+
 
 class GameDetailView(View):
     def get(self, request):
@@ -25,4 +26,3 @@ class GameDetailView(View):
 class NewGameView(View):
     def get(self, request):
         return render(self.request, 'new_game.html')
-

@@ -6,7 +6,7 @@ from .views import ProfileView, \
 from menu.views import WelcomeView
 from rest_framework import routers
 
-
+app_name = 'game'
 router = routers.DefaultRouter()
 router.register(r'boards', ApiView, 'board')
 

@@ -34,3 +34,5 @@ class MyCustomSignupForm(SignupForm):
 
         # You must return the original result.
         return user
+
+

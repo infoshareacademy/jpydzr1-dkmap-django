@@ -24,7 +24,7 @@
         </div>
         <div class="column-30">
             {% if request.user.is_authenticated %}
-            <a href="{% url "new-game-view" %}">
+            <a href="{% url "menu:new-game-view" %}">
                 <button class="CTA-button" type="button">PLAY</button>
             </a>
             {% else %}

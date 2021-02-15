@@ -159,6 +159,28 @@ td{
     border: solid 1px white;
 }
 
+.LOG-button{
+    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+    height: 40px;
+    color: #fff;
+    background-color: #6BBFEF;
+    border-radius: 10px;
+    border: solid 1px #fff;
+    cursor: pointer;
+    padding-right: 22px;
+    padding-left: 22px;
+    margin: 10px 0 10px 0;
+}
+
+.LOG-button:hover{
+    transform: scale(1.1);
+    transition: ease 0.7s;
+    color: #D32F2F;
+    border: solid 1px white;
+}
+
+
 .CTA-button-auth{
     align-content: center;
     font-size: 22px;

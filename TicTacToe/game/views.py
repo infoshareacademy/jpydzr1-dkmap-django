@@ -15,6 +15,10 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.authtoken.models import Token
 from random import randint
+import logging
+
+
+db_logger = logging.getLogger('db')
 
 
 class ProfileView(View):
@@ -103,6 +107,8 @@ class CreateBoard(APIView):
 
             board = Board(game=game)
 
+            db_logger.info(f'Game created by {user} - board {board.game_id}.')
+
         except:
             raise ValueError('Wrong input data. Try again.')
 
@@ -152,13 +158,14 @@ class JoinBoard(APIView):
                     pass
                 else:
                     board.game.player_x = user
+                    db_logger.info(f'{user} joined board {board_number}.')
 
             elif board.game.player_o is None:
                 if str(board.game.player_x) == str(user.username):
                     pass
                 else:
                     board.game.player_o = user
-
+                    db_logger.info(f'{user} joined board {board_number}.')
             else:
                 pass
 
@@ -238,6 +245,8 @@ class UpdateBoard(APIView):
         user_stats = PlayerStatistic.objects.get(user=user)
         if statistic == 'win':
             user_stats.add_win()
+        elif statistic == 'game':
+            user_stats.add_game()
 
     def message_for_user(self, state):
         messages.warning(self.request, state)

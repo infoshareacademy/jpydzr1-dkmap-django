@@ -4,7 +4,7 @@ from datetime import timedelta
 
 
 class PlayerStatistic(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     time_spend_in_game = models.DurationField(default=timedelta(seconds=0))
     best_game_time = models.DurationField(default=timedelta(seconds=0))
     game_counter = models.IntegerField(default=0)
@@ -12,7 +12,9 @@ class PlayerStatistic(models.Model):
     lose_counter = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"Statistics: {self.user.username}"
+        if self.user:
+            return f"Statistics: {self.user.username}"
+        return 'Account does not exist.'
 
     def add_win(self) -> int:
         self.win_counter += 1

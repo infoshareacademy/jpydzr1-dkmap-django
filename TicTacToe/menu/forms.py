@@ -7,17 +7,20 @@ class MyCustomSignupForm(SignupForm):
 
     def __init__(self, *args, **kwargs):
         super(MyCustomSignupForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'] = forms.CharField(required=True,
-                                                    widget=forms.TextInput(attrs={'placeholder': 'First Name'}),
-                                                    label='First Name',
-                                                    )
-        self.fields['last_name'] = forms.CharField(required=True,
-                                                   widget=forms.TextInput(attrs={'placeholder': 'Last Name'}),
-                                                   label='Last Name',
-                                                   )
+        self.fields['first_name'] = forms.CharField(
+            required=True,
+            widget=forms.TextInput(
+                attrs={'placeholder': 'First Name'}),
+            label='First Name',
+        )
+        self.fields['last_name'] = forms.CharField(
+            required=True,
+            widget=forms.TextInput(
+                attrs={'placeholder': 'Last Name'}),
+            label='Last Name',
+        )
 
     def save(self, request):
-
         # Ensure you call the parent class's save.
         # .save() returns a User object.
         user = super(MyCustomSignupForm, self).save(request)

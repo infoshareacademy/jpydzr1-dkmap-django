@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="column-100">
+            <h1>Logging report</h1>
+        </div>
+        <div class="column-100">
+            <form method="GET" action="#">
+
+                <div class="">
+                    <label for="date_min">Publish date minimum</label>
+                    <input id="date_min" type="date" name="date_min" class="form-control">
+                </div>
+
+                <div class="">
+                    <label for="date_max">Publish date maximum</label>
+                    <input id="date_max" type="date" name="date_max">
+                </div>
+
+                <div class="">
+                    <label for="log_level">Category</label>
+                    <select id="log_level" name="log_level">
+
+                        <option selected>Choose..</option>
+                        {% for level in log_levels %}
+                            <option value='{{ level }}'>{{ level }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+                <button type="submit">Show results</button>
+
+            </form>
+        </div>
+        <div class="">
+            <table>
+                {% if queryset %}
+                    <tr>
+                        <td><strong>MESSAGE</strong></td>
+                        <td><strong>DATE</strong></td>
+                    </tr>
+                    {% for query in page_obj %}
+                        <tr>
+                            <td> {{ query.msg }}</td>
+                            <td>{{ query.create_datetime }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+    </div>
+    <div class="container pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+
+    <a href="{% url 'menu:export-to-csv' %}"><button type="button" class="danger-button">Import all logs to CSV</button></a>
+
+{% endblock content %}

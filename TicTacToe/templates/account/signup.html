@@ -24,7 +24,7 @@
 
 <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 
-<form class="signup" id="signup_form" method="post" action="{% url 'signup-view' %}">
+<form class="signup" id="signup_form" method="post" action="{% url 'player:signup-view' %}">
   {% csrf_token %}
 
     <p>{{ form.first_name.label }}*</p>

@@ -1,3 +1,6 @@
+import time
+from datetime import timedelta
+
 from django.db import models
 from django.conf import settings
 
@@ -38,11 +41,11 @@ class Game(models.Model):
         )
     in_progress = models.BooleanField(default=True)
     win = models.BooleanField(default=False)
-    start_time = models.DateTimeField(auto_now_add=True, blank=True)
-    finish_time = models.DateTimeField(blank=True, null=True)
+    start_time = models.FloatField(null=True, blank=True)
+    finish_time = models.FloatField(null=True, blank=True)
 
     def __str__(self):
-        state = 'finished' if self.in_progress else 'not finished'
+        state = 'not finished' if self.in_progress else 'finished'
         return f"Game {self.id} - {state}"
 
 # class GameSession(models.Model):
@@ -65,6 +68,10 @@ class Board(models.Model):
 
     def __str__(self):
         return f"Board {self.id}"
+
+    def get_game_time(self) -> timedelta:
+        game_duration = self.game.finish_time - self.game.start_time
+        return timedelta(seconds=game_duration)
 
     def win_board(self) -> bool:
         """Function which check board state, check if win condition has been met.
@@ -97,7 +104,7 @@ class Board(models.Model):
 
         return False
 
-    def check_if_board_is_full(self) -> bool:
+    def check_if_board_is_full(self):
         board_fields = [self.first_field,
                         self.second_field,
                         self.third_field,
@@ -113,12 +120,18 @@ class Board(models.Model):
             if field != ' ':
                 index += 1
 
+        if index == 1:
+            start_time = time.perf_counter()
+        else:
+            start_time = 0
+
         if index == 9:
-            return True
-        return False
+            return True, start_time
+        return False, start_time
 
     def check_if_field_is_empty(self, field) -> bool:
-        """Method which check if field is empty."""
+        """Method which check if field is empty.
+        """
         board_fields = [
             self.first_field,
             self.second_field,
@@ -149,3 +162,5 @@ class Board(models.Model):
                 if current_field == ' ':
                     return True
                 return False
+
+

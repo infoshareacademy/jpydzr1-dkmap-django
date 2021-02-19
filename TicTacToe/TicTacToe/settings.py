@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'game',
     'menu',
     'player',
+    'stats',
 
     #3rd party:
     'allauth',

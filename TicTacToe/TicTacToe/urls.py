@@ -7,6 +7,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('menu.urls', namespace='menu')),
     path('game/', include('game.urls', namespace='game')),
+    path('stats/', include('stats.urls', namespace='stats')),
     path('player/', include('player.urls', namespace='player')),
 
 ]

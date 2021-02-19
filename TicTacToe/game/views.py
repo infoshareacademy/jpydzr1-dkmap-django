@@ -1,10 +1,12 @@
+import time
+import logging
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View, ListView, DetailView
-from menu.models import PlayerStatistic
+from stats.models import PlayerStatistic
 from rest_framework import viewsets, status
 from .serializers import BoardSerializer
 from .models import Board, Game
@@ -12,10 +14,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_200_OK
 from rest_framework.views import APIView
+from stats.views import ApiView as StatsApi
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.authtoken.models import Token
 from random import randint
-import logging
 
 
 db_logger = logging.getLogger('db')
@@ -108,6 +110,8 @@ class CreateBoard(APIView):
             board = Board(game=game)
 
             db_logger.info(f'Game created by {user} - board {board.game_id}.')
+            statistic = StatsApi()
+            statistic.add_game(request)
 
         except:
             raise ValueError('Wrong input data. Try again.')
@@ -159,6 +163,8 @@ class JoinBoard(APIView):
                 else:
                     board.game.player_x = user
                     db_logger.info(f'{user} joined board {board_number}.')
+                    statistic = StatsApi()
+                    statistic.add_game(request)
 
             elif board.game.player_o is None:
                 if str(board.game.player_x) == str(user.username):
@@ -166,6 +172,8 @@ class JoinBoard(APIView):
                 else:
                     board.game.player_o = user
                     db_logger.info(f'{user} joined board {board_number}.')
+                    statistic = StatsApi()
+                    statistic.add_game(request)
             else:
                 pass
 
@@ -192,10 +200,11 @@ def check_win_board(board) -> bool:
     return False
 
 
-def check_if_board_is_full(board) -> bool:
-    if board.check_if_board_is_full():
-        return True
-    return False
+def check_if_board_is_full(board):
+    tie, start_time = board.check_if_board_is_full()
+    if tie:
+        return True, start_time
+    return False, start_time
 
 
 class UpdateBoard(APIView):
@@ -207,7 +216,7 @@ class UpdateBoard(APIView):
             board = Board.objects.get(id=board_id)
             field = self.request.data['button_id']
 
-            # Empty field check:
+            # Check if field is empty:
             if board.check_if_field_is_empty(field) and board.game.in_progress:
                 self.field_input(board, field)
             else:
@@ -218,11 +227,21 @@ class UpdateBoard(APIView):
             if win:
                 board.game.win = True
                 board.game.in_progress = False
-                self.update_player_statistics(user, 'win')
-            else:
-                tie = check_if_board_is_full(board)
-                if tie:
-                    board.game.in_progress = False
+                statistic = StatsApi()
+                statistic.add_win(request)
+                board.game.finish_time = time.perf_counter()
+                board.game.save()
+                statistic.add_total_time(request, board_id)
+                statistic.add_best_time(request, board_id)
+
+            tie, start_time = check_if_board_is_full(board)
+            if start_time != 0:
+                board.game.start_time = start_time
+            if tie:
+                board.game.in_progress = False
+                board.game.finish_time = time.perf_counter()
+                board.game.save()
+                statistic.add_total_time(request, board_id)
 
             board.game.save()
 
@@ -239,14 +258,6 @@ class UpdateBoard(APIView):
             else:
                 print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    @staticmethod
-    def update_player_statistics(user, statistic) -> None:
-        user_stats = PlayerStatistic.objects.get(user=user)
-        if statistic == 'win':
-            user_stats.add_win()
-        elif statistic == 'game':
-            user_stats.add_game()
 
     def message_for_user(self, state):
         messages.warning(self.request, state)
@@ -429,17 +440,3 @@ def login(request):
     token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key},
                     status=HTTP_200_OK)
-
-# TODO: odswiezenie nickow, ??
-
-# TODO: zliczanie wygranych, czasu itd.
-
-# TODO: testy,
-
-# TODO: heroku,
-
-# TODO: logowanie,
-
-# TODO: websocket,
-
-# TODO: limit czasu na ruch

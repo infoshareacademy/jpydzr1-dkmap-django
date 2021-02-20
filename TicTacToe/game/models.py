@@ -48,9 +48,6 @@ class Game(models.Model):
         state = 'not finished' if self.in_progress else 'finished'
         return f"Game {self.id} - {state}"
 
-# class GameSession(models.Model):
-#     games = models.ForeignKey(Game, on_delete=models.PROTECT)
-
 
 class Board(models.Model):
     game = models.OneToOneField(Game, on_delete=models.CASCADE, blank=True, null=True)
@@ -65,6 +62,23 @@ class Board(models.Model):
     ninth_field = models.CharField(max_length=1, choices=board_choices, default=' ')
     last_move = models.CharField(max_length=1, choices=X_or_O, blank=True)
     end_game = models.BooleanField(default=False)
+
+    @property
+    def data(self):
+        return {
+            'game': self.game.id,
+            'first_field': self.first_field,
+            'second_field': self.second_field,
+            'third_field': self.third_field,
+            'fourth_field': self.fourth_field,
+            'fifth_field': self.fifth_field,
+            'sixth_field': self.sixth_field,
+            'seventh_field': self.seventh_field,
+            'eighth_field': self.eighth_field,
+            'ninth_field': self.ninth_field,
+            'last_move': self.last_move,
+            'end_game': self.end_game
+        }
 
     def __str__(self):
         return f"Board {self.id}"
@@ -120,18 +134,14 @@ class Board(models.Model):
             if field != ' ':
                 index += 1
 
-        if index == 1:
-            start_time = time.perf_counter()
-        else:
-            start_time = 0
+        start_time = time.perf_counter() if index == 1 else 0
 
         if index == 9:
             return True, start_time
         return False, start_time
 
     def check_if_field_is_empty(self, field) -> bool:
-        """Method which check if field is empty.
-        """
+        """Method which check if field is empty."""
         board_fields = [
             self.first_field,
             self.second_field,

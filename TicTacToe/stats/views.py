@@ -8,7 +8,7 @@ from .serializers import PlayerStatisticsSerializer
 from game.models import Board
 
 
-class ApiView(viewsets.ModelViewSet):
+class StatsApi(viewsets.ModelViewSet):
     queryset = PlayerStatistic.objects.all()
     serializer_class = PlayerStatisticsSerializer
 
@@ -57,10 +57,8 @@ class ApiView(viewsets.ModelViewSet):
         statistics = PlayerStatistic.objects.get(user=user)
         best_time_so_far = statistics.best_game_time
         current_game_time = board.get_game_time()
-        if best_time_so_far == timedelta(seconds=0):
-            statistics.best_game_time = current_game_time
 
-        elif current_game_time < best_time_so_far:
+        if best_time_so_far == timedelta(seconds=0) or current_game_time < best_time_so_far:
             statistics.best_game_time = current_game_time
 
         statistics.save()

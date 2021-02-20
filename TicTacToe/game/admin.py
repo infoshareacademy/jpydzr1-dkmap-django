@@ -3,14 +3,10 @@ from .models import Game, Board
 
 
 @admin.register(Game)
-class HouseAdmin(admin.ModelAdmin):
+class GameAdmin(admin.ModelAdmin):
     pass
 
 
 @admin.register(Board)
-class HouseAdmin(admin.ModelAdmin):
+class BoardAdmin(admin.ModelAdmin):
     pass
-
-
-
-

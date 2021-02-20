@@ -7,39 +7,44 @@
 
         <div class="container">
 
-            <h4 style="margin-top: 15px;">Hi {{ request.user|capfirst }}! Good to see you. Please click 'CREATE A NEW GAME'
-            button in order to create a new game then join created game, wait for another player. Or simply join your friend game!
-            Good luck!</h4>
+            <h4 style="margin-top: 15px;">Hi {{ request.user|capfirst }}! Good to see you. Please click 'CREATE A NEW
+                GAME'
+                button in order to create a new game then join created game, wait for another player. Or simply join
+                your friend game!
+                Good luck!</h4>
 
-        <div class="column-30">
-           <a href="{% url 'list-board' %}"><button onclick="createBoard()" id="create-board">CREATE A NEW GAME</button></a>
-        </div>
-        <div class="column-70">
-            <ul>
-                {% if all_current_boards %}
-                {% for board in all_current_boards %}
-                    {% if board.game.player_x is None %}
-                    <li>free space
-                        {% else %}
-                        <li>{{ board.game.player_x|capfirst }}
-                        {% endif %}
-                        <a href="{{ board.id }}"><button onclick="joinBoard({{ board.id }})" id="join-board">JOIN {{ board }}</button>
+            <div class="column-30">
+                <a href="{% url 'game:list-board' %}">
+                    <button onclick="createBoard()" id="create-board">CREATE A NEW GAME</button>
+                </a>
+            </div>
+            <div class="column-70">
+                <ul>
+                    {% if all_current_boards %}
+                        {% for board in all_current_boards %}
+                            {% if board.game.player_x is None %}
+                                <li>free space
+                                    {% else %}
+                                <li>{{ board.game.player_x|capfirst }}
+                            {% endif %}
+                        <a href="{{ board.id }}">
+                            <button onclick="joinBoard({{ board.id }})" id="join-board">JOIN {{ board }}</button>
                             {% if board.game.player_o is None %}
 
-                        </a>free space</li>
+                                </a>free space</li>
+                            {% else %}
+
+                                </a>{{ board.game.player_o|capfirst }}</li>
+
+                            {% endif %}
+                        {% endfor %}
                     {% else %}
-
-                        </a>{{ board.game.player_o|capfirst }}</li>
-
+                        <p>There is no games in progress. Please create one if you would like to play.</p>
                     {% endif %}
-                {% endfor %}
-                {% else %}
-                <p>There is no games in progress. Please create one if you would like to play.</p>
-                {% endif %}
-            </ul>
-        </div>
+                </ul>
+            </div>
 
-    </div>
+        </div>
         <div class="column-100">
         </div>
     </div>

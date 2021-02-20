@@ -3,13 +3,15 @@ from .views import ProfileView, \
     JoinGameBoardView, ApiView, login, \
     CreateBoard, UpdateBoard, JoinBoard, \
     RefreshBoard, ListBoardView
+from menu.views import WelcomeView
 from rest_framework import routers
 
-
+app_name = 'game'
 router = routers.DefaultRouter()
 router.register(r'boards', ApiView, 'board')
 
 urlpatterns = [
+    path('', WelcomeView.as_view(), name='welcome-view'),
     path('profile/', ProfileView.as_view(), name='profile-view'),
     path('boards/', ListBoardView.as_view(), name='list-board'),
     path('boards/<int:pk>/', JoinGameBoardView.as_view(), name='game-board'),

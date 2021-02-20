@@ -14,9 +14,9 @@
 
 
 <!-- Ajax urls -->
-<script>const newBoard = "{% url 'create_board' %}"</script>
-<script>const newUpdateBoard = "{% url 'update_board' %}"</script>
-<script>const joinNewBoard = "{% url 'join_board' %}"</script>
+<script>const newBoard = "{% url 'game:create_board' %}"</script>
+<script>const newUpdateBoard = "{% url 'game:update_board' %}"</script>
+<script>const joinNewBoard = "{% url 'game:join_board' %}"</script>
 
 {% block refresh_script %}
 

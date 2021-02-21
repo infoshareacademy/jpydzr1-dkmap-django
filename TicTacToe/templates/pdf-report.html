@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Statistic Report</h1>
+
+<table style="width: 100%;">
+    <tr>
+        <th><strong>User</strong></th>
+        <th><strong>Games</strong></th>
+        <th><strong>Wins</strong></th>
+        <th><strong>Best Time</strong></th>
+        <th><strong>Total Time</strong></th>
+    </tr>
+    {% for query in queryset %}
+        <tr style="text-align: center;">
+            <td> {{ query.user }}</td>
+            <td>{{ query.game_counter }}</td>
+            <td>{{ query.win_counter }}</td>
+            <td>{{ query.best_game_time }}</td>
+            <td>{{ query.time_spend_in_game }}</td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>

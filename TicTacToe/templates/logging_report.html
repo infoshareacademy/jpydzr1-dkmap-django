@@ -4,11 +4,13 @@
 
     <div class="container">
         <div class="column-100">
-            <h1>Logging report</h1>
+            <div id="container" style="width: 75%;">
+                    <canvas id="pie-chart"></canvas>
+            </div>
         </div>
         <div class="column-100">
             <form method="GET" action="#">
-
+                <label><b>Select dates and logging level:</b></label>
                 <div class="log-input">
                     <label for="date_min">Publish date minimum:</label>
                     <input id="date_min" type="date" name="date_min" class="form-control">
@@ -27,12 +29,9 @@
                         {% for level in log_levels %}
                             <option value='{{ level }}'>{{ level }}</option>
                         {% endfor %}
-
                     </select>
                 </div>
-
                 <button class="CTA-button-auth" type="submit">Show results</button>
-
             </form>
         </div>
         <div>
@@ -58,18 +57,21 @@
             <a href="?page=1">&laquo; first</a>
             <a href="?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
-
         <span class="current">
             Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
         </span>
-
         {% if page_obj.has_next %}
             <a href="?page={{ page_obj.next_page_number }}">next</a>
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
     </div>
-
-    <a href="{% url 'menu:export-to-csv' %}"><button type="button" class="LOG-button">Import all logs to CSV</button></a>
+    <a href="{% url 'menu:export-to-csv' %}">
+        <button type="button" class="LOG-button">Import all logs to CSV</button>
+    </a>
 
 {% endblock content %}
+
+{% block piechart_script %}
+
+{% endblock piechart_script %}

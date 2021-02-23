@@ -1,5 +1,6 @@
 import pdfkit
 from django.contrib import admin
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.template.loader import get_template
 
@@ -8,11 +9,16 @@ from .models import PlayerStatistic
 
 def get_a_report(modeladmin, request, queryset):
 
+    game_amount = queryset.aggregate(game_amount=Sum('game_counter'))
+    wins_amount = queryset.aggregate(wins_amount=Sum('win_counter'))
+    game_time = queryset.aggregate(game_time=Sum('time_spend_in_game'))
+
     template = get_template('pdf-report.html')
     html = template.render({
         'queryset': queryset,
-        'labels': ['gdansk', 'moskwa'],
-        'data': [1231312, 3213123]
+        'game_amount': game_amount['game_amount'],
+        'wins_amount': wins_amount['wins_amount'],
+        'game_time': game_time['game_time']
     })
 
     options = {
@@ -22,7 +28,7 @@ def get_a_report(modeladmin, request, queryset):
     pdf = pdfkit.from_string(html, False, options)
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment'
-    filename = "person_list_pdf.pdf"
+
     return response
 
 

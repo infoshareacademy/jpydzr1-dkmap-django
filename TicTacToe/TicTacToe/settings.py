@@ -1,6 +1,6 @@
 from pathlib import Path
 import os
-from secret_data import SECRET_KEY, DB_PASSWORD
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SECRET_KEY
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -83,20 +83,17 @@ AUTH_USER_MODEL = 'player.CustomUser'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-try:
-    from .settings_local import DATABASES
 
-except ImportError:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'production_db',
-            'USER': 'user',
-            'PASSWORD': 'password',
-            'HOST': 'db.example.com',
-            'PORT': '5432',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT':os.getenv('DATABASE_PORT'),
     }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

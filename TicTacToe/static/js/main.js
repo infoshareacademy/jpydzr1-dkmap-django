@@ -4,10 +4,10 @@ const links = document.querySelectorAll('.nav-links li');
 
 hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('open');
-    links.forEach(link =>{
+    links.forEach(link => {
         link.classList.toggle('fade');
     });
-}); 
+});
 
 
 function clicked() {
@@ -22,7 +22,7 @@ function csrfSafeMethod(method) {
 }
 
 $.ajaxSetup({
-    beforeSend: function(xhr, settings) {
+    beforeSend: function (xhr, settings) {
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
@@ -34,16 +34,17 @@ function createBoard() {
     $.ajax({
         type: "POST",
         url: newBoard,
-        success: function(data) {
+        success: function (data) {
             clearBoard();
-          },
-        error: function(data) {
-        alert(`Something went wrong.`)
+        },
+        error: function (data) {
+            alert(`Error occurred when creating a new game.`)
         }
-})}
+    })
+}
 
 
-let interval = window.setInterval(function(){
+let interval = window.setInterval(function () {
     refreshBoard()
 }, 2000);
 
@@ -55,7 +56,7 @@ function refreshBoard() {
         url: refreshNewBoard,
         data: {'board_id': board_id},
         dataType: "json",
-        success: function(response) {
+        success: function (response) {
             document.querySelector("#first_field").innerHTML = response["first_field"]
             document.querySelector("#second_field").innerHTML = response["second_field"]
             document.querySelector("#third_field").innerHTML = response["third_field"]
@@ -79,13 +80,14 @@ function updateBoard(button_id) {
         data: {'button_id': button_id, 'board_id': board_id},
         dataType: 'json',
         async: false,
-        success: function(data) {
+        success: function (data) {
             document.querySelector(`#${button_id}`).innerHTML = data[button_id]
-          },
-        error: function(data) {
-        alert(`Something went wrong.`)
+        },
+        error: function (data) {
+            alert(`Error occurred when updating board. Please contact with administrator.`)
         }
-})}
+    })
+}
 
 function joinBoard(board_number) {
     $.ajax({
@@ -93,13 +95,14 @@ function joinBoard(board_number) {
         url: joinNewBoard,
         data: {'joined_board': board_number},
         dataType: 'json',
-        success: function (data){
+        success: function (data) {
 
         },
         error: function (data) {
-
+            alert(`Error occurred when updating board. Please contact with administrator.`)
         },
-    })}
+    })
+}
 
 
 $('[id*="_field"]').click(function () {
@@ -108,7 +111,7 @@ $('[id*="_field"]').click(function () {
 });
 
 
-function clearBoard(){
+function clearBoard() {
     $("#first_field").html("");
     $("#second_field").html("");
     $("#third_field").html("");

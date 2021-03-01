@@ -15,9 +15,9 @@ SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -84,7 +84,7 @@ AUTH_USER_MODEL = 'player.CustomUser'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 try:
-    from .settings_local import DATABASES
+    from .local_settings import DATABASES
 
 except ImportError:
     DATABASES = {
@@ -204,3 +204,8 @@ LOGGING = {
         }
     }
 }
+
+try:
+    from .local_settings import DATABASES
+except ImportError:
+    pass

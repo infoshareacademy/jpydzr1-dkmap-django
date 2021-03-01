@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .tg {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .tg td {
+            border-style: solid;
+            border-width: 0px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg th {
+            border-style: solid;
+            border-width: 0px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg .tg-34fe {
+            background-color: #c0c0c0;
+            border-color: inherit;
+            text-align: center;
+            vertical-align: top
+        }
+
+        .tg .tg-zlqz {
+            background-color: #c0c0c0;
+            border-color: inherit;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: top
+        }
+
+        .tg .tg-c3ow {
+            border-color: inherit;
+            text-align: center;
+            vertical-align: top
+        }
+
+        .tg .tg-hle0 {
+            background-color: #ffffff;
+            border-color: inherit;
+            color: #000000;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: top
+        }
+
+        .tg .tg-y6fn {
+            background-color: #c0c0c0;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg .tg-0lax {
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg {
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin-bottom: 25px;
+        }
+
+        .tg td {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg th {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg .tg-abx8 {
+            background-color: #c0c0c0;
+            font-weight: bold;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg .tg-0lax {
+            text-align: left;
+            vertical-align: top
+        }
+
+        .middle{
+            align-content: center;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="middle">
+
+<h1>Statistic Report</h1>
+
+<table class="tg" style="width: 80%;">
+    <thead>
+    <tr>
+        <th class="tg-abx8">USER</th>
+        <th class="tg-abx8">GAMES</th>
+        <th class="tg-abx8">WINS</th>
+        <th class="tg-abx8">BEST TIME</th>
+        <th class="tg-abx8">TOTAL TIME</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for query in queryset %}
+    <tr>
+        <td class="tg-0lax">{{ query.user }}</td>
+        <td class="tg-0lax">{{ query.game_counter }}</td>
+        <td class="tg-0lax">{{ query.win_counter }}</td>
+        <td class="tg-0lax">{{ query.best_game_time }}</td>
+        <td class="tg-0lax">{{ query.time_spend_in_game }}</td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+
+<table class="tg" style="width: 50%;">
+    <thead>
+    <tr>
+        <th class="tg-zlqz">Total amount of games</th>
+        <th class="tg-hle0">{{ game_amount }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="tg-34fe"><span style="font-weight:700;font-style:normal">Total amount of wins</span></td>
+        <td class="tg-c3ow">{{ wins_amount }}</td>
+    </tr>
+    <tr>
+        <td class="tg-zlqz"><span style="font-weight:700;font-style:normal">Total time spend in game</span></td>
+        <td class="tg-c3ow">{{ game_time }}</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+</body>
+</html>

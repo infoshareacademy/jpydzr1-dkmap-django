@@ -151,7 +151,9 @@ class BoardApi(viewsets.ModelViewSet):
         #                 'eighth_field': 7,
         #                 'ninth_field': 8
         #                 }
-        #
+        # print(type(board.first_field))
+        # print(type(board_fields[0]))
+
         # for element in board_number.items():
         #     if field == element[0]:
         #         if self.two_players_on_board_validation(board):
@@ -172,114 +174,99 @@ class BoardApi(viewsets.ModelViewSet):
         # print(x)
         # print(y)
 
-        if field == 'first_field':
-            if self.two_players_on_board_validation(board):
-                pass
-            elif str(self.request.user) == board.game.player_x.username:
-                if self.last_move_validation(board, 'X'):
-                    board.first_field = 'X'
-                    board.last_move = 'X'
-            elif str(self.request.user) == board.game.player_o.username:
-                if self.last_move_validation(board, 'O'):
-                    board.first_field = 'O'
-                    board.last_move = 'O'
+        if self.two_players_on_board_validation(board):
+            return board
+        else:
+            if field == 'first_field':
+                if str(self.request.user) == board.game.player_x.username:
+                    if self.last_move_validation(board, 'X'):
+                        board.first_field = 'X'
+                        board.last_move = 'X'
+                elif str(self.request.user) == board.game.player_o.username:
+                    if self.last_move_validation(board, 'O'):
+                        board.first_field = 'O'
+                        board.last_move = 'O'
 
-        elif field == 'second_field':
-            if self.two_players_on_board_validation(board):
-                pass
-            elif str(self.request.user) == board.game.player_x.username:
-                if self.last_move_validation(board, 'X'):
-                    board.second_field = 'X'
-                    board.last_move = 'X'
-            elif str(self.request.user) == board.game.player_o.username:
-                if self.last_move_validation(board, 'O'):
-                    board.second_field = 'O'
-                    board.last_move = 'O'
+            elif field == 'second_field':
+                if str(self.request.user) == board.game.player_x.username:
+                    if self.last_move_validation(board, 'X'):
+                        board.second_field = 'X'
+                        board.last_move = 'X'
+                elif str(self.request.user) == board.game.player_o.username:
+                    if self.last_move_validation(board, 'O'):
+                        board.second_field = 'O'
+                        board.last_move = 'O'
 
-        elif field == 'third_field':
-            if self.two_players_on_board_validation(board):
-                pass
-            elif str(self.request.user) == board.game.player_x.username:
-                if self.last_move_validation(board, 'X'):
-                    board.third_field = 'X'
-                    board.last_move = 'X'
-            elif str(self.request.user) == board.game.player_o.username:
-                if self.last_move_validation(board, 'O'):
-                    board.third_field = 'O'
-                    board.last_move = 'O'
+            elif field == 'third_field':
+                if str(self.request.user) == board.game.player_x.username:
+                    if self.last_move_validation(board, 'X'):
+                        board.third_field = 'X'
+                        board.last_move = 'X'
+                elif str(self.request.user) == board.game.player_o.username:
+                    if self.last_move_validation(board, 'O'):
+                        board.third_field = 'O'
+                        board.last_move = 'O'
 
-        elif field == 'fourth_field':
-            if self.two_players_on_board_validation(board):
-                pass
-            elif str(self.request.user) == board.game.player_x.username:
-                if self.last_move_validation(board, 'X'):
-                    board.fourth_field = 'X'
-                    board.last_move = 'X'
-            elif str(self.request.user) == board.game.player_o.username:
-                if self.last_move_validation(board, 'O'):
-                    board.fourth_field = 'O'
-                    board.last_move = 'O'
+            elif field == 'fourth_field':
+                if str(self.request.user) == board.game.player_x.username:
+                    if self.last_move_validation(board, 'X'):
+                        board.fourth_field = 'X'
+                        board.last_move = 'X'
+                elif str(self.request.user) == board.game.player_o.username:
+                    if self.last_move_validation(board, 'O'):
+                        board.fourth_field = 'O'
+                        board.last_move = 'O'
 
-        elif field == 'fifth_field':
-            if self.two_players_on_board_validation(board):
-                pass
-            elif str(self.request.user) == board.game.player_x.username:
-                if self.last_move_validation(board, 'X'):
-                    board.fifth_field = 'X'
-                    board.last_move = 'X'
-            elif str(self.request.user) == board.game.player_o.username:
-                if self.last_move_validation(board, 'O'):
-                    board.fifth_field = 'O'
-                    board.last_move = 'O'
+            elif field == 'fifth_field':
+                if str(self.request.user) == board.game.player_x.username:
+                    if self.last_move_validation(board, 'X'):
+                        board.fifth_field = 'X'
+                        board.last_move = 'X'
+                elif str(self.request.user) == board.game.player_o.username:
+                    if self.last_move_validation(board, 'O'):
+                        board.fifth_field = 'O'
+                        board.last_move = 'O'
 
-        elif field == 'sixth_field':
-            if self.two_players_on_board_validation(board):
-                pass
-            elif str(self.request.user) == board.game.player_x.username:
-                if self.last_move_validation(board, 'X'):
-                    board.sixth_field = 'X'
-                    board.last_move = 'X'
-            elif str(self.request.user) == board.game.player_o.username:
-                if self.last_move_validation(board, 'O'):
-                    board.sixth_field = 'O'
-                    board.last_move = 'O'
+            elif field == 'sixth_field':
+                if str(self.request.user) == board.game.player_x.username:
+                    if self.last_move_validation(board, 'X'):
+                        board.sixth_field = 'X'
+                        board.last_move = 'X'
+                elif str(self.request.user) == board.game.player_o.username:
+                    if self.last_move_validation(board, 'O'):
+                        board.sixth_field = 'O'
+                        board.last_move = 'O'
 
-        elif field == 'seventh_field':
-            if self.two_players_on_board_validation(board):
-                pass
-            elif str(self.request.user) == board.game.player_x.username:
-                if self.last_move_validation(board, 'X'):
-                    board.seventh_field = 'X'
-                    board.last_move = 'X'
-            elif str(self.request.user) == board.game.player_o.username:
-                if self.last_move_validation(board, 'O'):
-                    board.seventh_field = 'O'
-                    board.last_move = 'O'
+            elif field == 'seventh_field':
+                if str(self.request.user) == board.game.player_x.username:
+                    if self.last_move_validation(board, 'X'):
+                        board.seventh_field = 'X'
+                        board.last_move = 'X'
+                elif str(self.request.user) == board.game.player_o.username:
+                    if self.last_move_validation(board, 'O'):
+                        board.seventh_field = 'O'
+                        board.last_move = 'O'
 
-        elif field == 'eighth_field':
-            if self.two_players_on_board_validation(board):
-                pass
-            elif str(self.request.user) == board.game.player_x.username:
-                if self.last_move_validation(board, 'X'):
-                    board.eighth_field = 'X'
-                    board.last_move = 'X'
-            elif str(self.request.user) == board.game.player_o.username:
-                if self.last_move_validation(board, 'O'):
-                    board.eighth_field = 'O'
-                    board.last_move = 'O'
+            elif field == 'eighth_field':
+                if str(self.request.user) == board.game.player_x.username:
+                    if self.last_move_validation(board, 'X'):
+                        board.eighth_field = 'X'
+                        board.last_move = 'X'
+                elif str(self.request.user) == board.game.player_o.username:
+                    if self.last_move_validation(board, 'O'):
+                        board.eighth_field = 'O'
+                        board.last_move = 'O'
 
-        elif field == 'ninth_field':
-            if self.two_players_on_board_validation(board):
-                pass
-            elif str(self.request.user) == board.game.player_x.username:
-                if self.last_move_validation(board, 'X'):
-                    board.ninth_field = 'X'
-                    board.last_move = 'X'
-            elif str(self.request.user) == board.game.player_o.username:
-                if self.last_move_validation(board, 'O'):
-                    board.ninth_field = 'O'
-                    board.last_move = 'O'
-        return board
+            elif field == 'ninth_field':
+                if str(self.request.user) == board.game.player_x.username:
+                    if self.last_move_validation(board, 'X'):
+                        board.ninth_field = 'X'
+                        board.last_move = 'X'
+                elif str(self.request.user) == board.game.player_o.username:
+                    if self.last_move_validation(board, 'O'):
+                        board.ninth_field = 'O'
+                        board.last_move = 'O'
+            return board
 
     def retrieve(self, request, *args, **kwargs):
         board = self.get_data_for_board_refresh(request)

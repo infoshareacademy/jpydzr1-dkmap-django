@@ -5,12 +5,14 @@ from allauth.account.views import _ajax_response
 import logging
 from allauth.exceptions import ImmediateHttpResponse
 from django.shortcuts import redirect
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
+from .models import CustomUser
 
 db_logger = logging.getLogger('db')
 
 
 class CustomLoginView(LoginView):
-
     def form_valid(self, form):
         success_url = self.get_success_url()
         try:
@@ -27,7 +29,6 @@ class CustomLoginView(LoginView):
 
 
 class CustomSignUpView(SignupView):
-
     def form_valid(self, form):
         # By assigning the User to a property on the view, we allow subclasses
         # of SignupView to access the newly created User instance
@@ -51,7 +52,6 @@ class CustomSignUpView(SignupView):
 
 
 class CustomLogoutView(LogoutView):
-
     def post(self, *args, **kwargs):
         url = self.get_redirect_url()
         if self.request.user.is_authenticated:
@@ -60,3 +60,12 @@ class CustomLogoutView(LogoutView):
             self.logout()
         response = redirect(url)
         return _ajax_response(self.request, response)
+
+
+@receiver(pre_save, sender=CustomUser)
+def set_new_user_inactive(sender, instance, **kwargs):
+    if instance._state.adding is True:
+        print("Creating Inactive User")
+        instance.is_active = False
+    else:
+        print("Updating User Record")

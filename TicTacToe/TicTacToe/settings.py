@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     #3rd party:
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
     'crispy_forms',
     'rest_framework',
     'rest_framework.authtoken',

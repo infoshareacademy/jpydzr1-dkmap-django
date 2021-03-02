@@ -206,6 +206,6 @@ LOGGING = {
 }
 
 try:
-    from .local_settings import DATABASES
+    from .local_settings import *
 except ImportError:
     pass

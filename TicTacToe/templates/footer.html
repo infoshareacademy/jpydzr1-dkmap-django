@@ -25,15 +25,20 @@
             data: {
                 datasets: [{
                     data: {{ data|safe }},
-                    backgroundColor: [
-                        '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3'
-                    ],
+                    backgroundColor: {{ colors|safe }},
                     label: 'Population'
                 }],
                 labels: {{ labels|safe }}
             },
             options: {
-                responsive: true
+                responsive: true,
+                title: {
+                    display: true,
+                    position: 'top',
+                    text: 'Logging Types in Numbers',
+                    fontSize: 18,
+
+                }
             }
         };
 

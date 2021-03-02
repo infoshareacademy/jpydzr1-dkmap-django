@@ -19,8 +19,6 @@ def get_a_report(modeladmin, request, queryset):
         user = query.user.username
         names.append(user)
 
-    users = StatusLog.objects.filter()
-
     template = get_template('pdf-report.html')
     html = template.render({
         'queryset': queryset,
@@ -47,3 +45,5 @@ get_a_report.short_description = 'Select statistic and download a report.'
 class PlayerStatsAdmin(admin.ModelAdmin):
     ordering = ['-game_counter']
     actions = [get_a_report]
+
+

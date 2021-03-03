@@ -172,3 +172,7 @@ class Board(models.Model):
                 return False
 
 
+
+
+
+

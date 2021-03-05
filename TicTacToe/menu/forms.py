@@ -29,9 +29,6 @@ class MyCustomSignupForm(SignupForm):
         default_group, created = Group.objects.get_or_create(name='Users')
         user.groups.add(default_group)
 
-        first_name = self.cleaned_data.pop('first_name')
-        last_name = self.cleaned_data.pop('last_name')
-
         # You must return the original result.
         return user
 

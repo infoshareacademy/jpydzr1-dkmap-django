@@ -5,9 +5,7 @@ from allauth.account.views import _ajax_response
 import logging
 from allauth.exceptions import ImmediateHttpResponse
 from django.shortcuts import redirect
-from django.dispatch import receiver
-from django.db.models.signals import pre_save
-from .models import CustomUser
+
 
 db_logger = logging.getLogger('db')
 
@@ -60,12 +58,3 @@ class CustomLogoutView(LogoutView):
             self.logout()
         response = redirect(url)
         return _ajax_response(self.request, response)
-
-
-@receiver(pre_save, sender=CustomUser)
-def set_new_user_inactive(sender, instance, **kwargs):
-    if instance._state.adding is True:
-        print("Creating Inactive User")
-        instance.is_active = False
-    else:
-        print("Updating User Record")

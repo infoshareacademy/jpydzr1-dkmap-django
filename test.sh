@@ -1,2 +1,2 @@
 #!/bin/bash
-python ./TicTacToe/manage.py test tests
+python ./TicTacToe/manage.py jenkins

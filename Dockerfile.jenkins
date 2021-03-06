@@ -1,5 +1,6 @@
 FROM python:3
 WORKDIR  /code
 COPY . /code
+Run ls -la
 RUN pip install --no-cache-dir -r requirements.txt
-RUN ["python","./TicTacToe/manage.py", "test"]
+RUN ["python","./manage.py", "test"]

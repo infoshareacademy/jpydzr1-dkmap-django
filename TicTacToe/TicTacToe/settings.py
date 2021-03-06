@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_extensions',
     'django_db_logger',
-    'django_jenins',
+    'django_jenkins',
 ]
 
 MIDDLEWARE = [

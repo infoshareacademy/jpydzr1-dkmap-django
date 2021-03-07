@@ -3,4 +3,4 @@ WORKDIR  /code
 COPY . /code
 Run ls -la
 RUN pip install --no-cache-dir -r requirements.txt
-RUN ./test.sh
+CMD ./test.sh

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import ProfileView, JoinGameBoardView, ListBoardView
-from .api import login, BoardApi, JoinBoard
+from .api import login, BoardApi
 from menu.views import WelcomeView
 from rest_framework import routers
 

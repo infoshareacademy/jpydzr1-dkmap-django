@@ -10,7 +10,6 @@ from django.shortcuts import redirect
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_200_OK
-from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.authtoken.models import Token
 from rest_framework import viewsets, status
@@ -339,47 +338,6 @@ class BoardApi(viewsets.ModelViewSet):
                 db_logger.info(f'{user} joined board {board_number}.')
                 stats_update(request, 'game_counter')
         return board
-
-
-class JoinBoard(APIView):
-    pass
-    # def put(self, request):
-    #     try:
-    #         user = self.request.user
-    #         board_number = self.request.data['joined_board']
-    #         board = Board.objects.get(id=board_number)
-    #
-    #         if board.game.player_x is None:
-    #             if str(board.game.player_o) == str(user.username):
-    #                 pass
-    #             else:
-    #                 board.game.player_x = user
-    #                 db_logger.info(f'{user} joined board {board_number}.')
-    #                 stats_update(request, 'game_counter')
-    #
-    #         elif board.game.player_o is None:
-    #             if str(board.game.player_x) == str(user.username):
-    #                 pass
-    #             else:
-    #                 board.game.player_o = user
-    #                 db_logger.info(f'{user} joined board {board_number}.')
-    #                 stats_update(request, 'game_counter')
-    #
-    #         board.game.save()
-    #
-    #     except:
-    #         raise ValueError('Wrong input data. Try again.')
-    #
-    #     if request.method == 'PUT':
-    #         serializer = BoardSerializer(board, data=self.request.data)
-    #         data = {}
-    #         if serializer.is_valid():
-    #             serializer.save()
-    #             data['success'] = 'update successful'
-    #             return Response(data=serializer.data)
-    #         else:
-    #             print(serializer.errors)
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @csrf_exempt

@@ -1,9 +1,10 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 from game.models import Game, Board
 from tests.common.constants import BOARD_FIELDS_EXPECTED, FIELD_EMPTY_VAL
 
 
 class MyTestCase(TestCase):
+    @tag('enabled')
     def test_board_default_state(self):
         board = Board()
 
@@ -52,5 +53,6 @@ class MyTestCase(TestCase):
             f"Board in default state reported non-0 game time: {game_time}"
         )
 
+    # @tag('enabled')
     def test_game_default_state(self):
         pass

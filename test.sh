@@ -1,2 +1,2 @@
 #!/bin/bash
-python ./TicTacToe/manage.py test tests
+python -Wa ./TicTacToe/manage.py test --parallel --noinput --debug-sql --debug-mode --tag=enabled tests

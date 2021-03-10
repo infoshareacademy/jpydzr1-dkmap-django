@@ -16,6 +16,7 @@ X_or_O = (
     ('O', 'O')
     )
 
+
 class Game(models.Model):
     player_x = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -45,6 +46,7 @@ class Game(models.Model):
 
     def __str__(self):
         state = 'not finished' if self.in_progress else 'finished'
+        return f"Game {self.id} - {state}"
 
 
 class Board(models.Model):

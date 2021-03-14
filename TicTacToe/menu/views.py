@@ -3,6 +3,7 @@ from collections import Counter
 from random import randint
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -26,12 +27,12 @@ class WelcomeView(TemplateView):
         return render(request, 'welcome_page.html', context)
 
 
-class NewGameView(View):
+class NewGameView(LoginRequiredMixin, View):
     def get(self, request):
         return render(self.request, 'new_game.html')
 
 
-class LoggingReportView(View):
+class LoggingReportView(LoginRequiredMixin, View):
     def get(self, request):
         date_min = request.GET.get('date_min')
         date_max = request.GET.get('date_max')

@@ -4,6 +4,7 @@ from player.models import CustomUser
 from stats.models import PlayerStatistic
 from game.models import Board, Game
 
+
 class TestProfileView(TestCase):
 
     def setUp(self) -> None:

@@ -90,8 +90,8 @@ class TestJoinGameBoardView(TestCase):
         self.client.login(username='testuser', password='testpassword')
         self.board_id = 1
         game = Game.objects.create(player_o=user, created_by=user)
-        test_board = Board.objects.create(game=game, id=self.board_id)
-        test_board.save()
+        self.test_board = Board.objects.create(game=game, id=self.board_id)
+        self.test_board.save()
 
     def test_check_if_user_logged_in(self) -> None:
         logged_in = self.client.login(username='testuser', password='testpassword')

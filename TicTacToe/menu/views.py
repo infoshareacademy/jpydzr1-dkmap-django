@@ -7,11 +7,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import TemplateView, View
+from django.views.generic import View
 from django_db_logger.models import StatusLog, LOG_LEVELS
 
 
-class WelcomeView(TemplateView):
+class WelcomeView(View):
 
     def get(self, request):
 
@@ -64,6 +64,12 @@ class LoggingReportView(LoginRequiredMixin, View):
             color = '#%06x' % randint(0, 0xFFFFFF)
             colors.append(color)
 
+        context = self.get_context(colors, log, page_obj, qs)
+
+        return render(self.request, 'logging_report.html', context)
+
+    @staticmethod
+    def get_context(colors, log, page_obj, qs):
         context = {
             'queryset': qs,
             'log_levels': LOG_LEVELS[1:],
@@ -72,8 +78,7 @@ class LoggingReportView(LoginRequiredMixin, View):
             'data': list(log.values()),
             'colors': colors,
         }
-
-        return render(self.request, 'logging_report.html', context)
+        return context
 
     @staticmethod
     def is_valid_queryparam(param):

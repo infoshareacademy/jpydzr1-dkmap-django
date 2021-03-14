@@ -3,14 +3,15 @@ from collections import Counter
 from random import randint
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import TemplateView, View
+from django.views.generic import View
 from django_db_logger.models import StatusLog, LOG_LEVELS
 
 
-class WelcomeView(TemplateView):
+class WelcomeView(View):
 
     def get(self, request):
 
@@ -26,12 +27,12 @@ class WelcomeView(TemplateView):
         return render(request, 'welcome_page.html', context)
 
 
-class NewGameView(View):
+class NewGameView(LoginRequiredMixin, View):
     def get(self, request):
         return render(self.request, 'new_game.html')
 
 
-class LoggingReportView(View):
+class LoggingReportView(LoginRequiredMixin, View):
     def get(self, request):
         date_min = request.GET.get('date_min')
         date_max = request.GET.get('date_max')
@@ -63,6 +64,12 @@ class LoggingReportView(View):
             color = '#%06x' % randint(0, 0xFFFFFF)
             colors.append(color)
 
+        context = self.get_context(colors, log, page_obj, qs)
+
+        return render(self.request, 'logging_report.html', context)
+
+    @staticmethod
+    def get_context(colors, log, page_obj, qs):
         context = {
             'queryset': qs,
             'log_levels': LOG_LEVELS[1:],
@@ -71,8 +78,7 @@ class LoggingReportView(View):
             'data': list(log.values()),
             'colors': colors,
         }
-
-        return render(self.request, 'logging_report.html', context)
+        return context
 
     @staticmethod
     def is_valid_queryparam(param):

@@ -1,6 +1,7 @@
 import csv
-import os
 from collections import Counter
+from random import randint
+
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponse
@@ -54,8 +55,13 @@ class LoggingReportView(View):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
-        all_logs = list(StatusLog.objects.all().values_list('level', flat=True))
+        all_logs = list(StatusLog.objects.filter(**filter_dict).values_list('level', flat=True))
         log = Counter(all_logs)
+
+        colors = []
+        for color in range(5):
+            color = '#%06x' % randint(0, 0xFFFFFF)
+            colors.append(color)
 
         context = {
             'queryset': qs,
@@ -63,6 +69,7 @@ class LoggingReportView(View):
             'page_obj': page_obj,
             'labels': list(log.keys()),
             'data': list(log.values()),
+            'colors': colors,
         }
 
         return render(self.request, 'logging_report.html', context)

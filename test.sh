@@ -1,2 +1,3 @@
 #!/bin/bash
-python ./TicTacToe/manage.py jenkins tests
+python -Wa ./TicTacToe/manage.py test --parallel --noinput --debug-sql --debug-mode --tag=enabled tests
+

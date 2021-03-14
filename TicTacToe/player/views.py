@@ -6,11 +6,11 @@ import logging
 from allauth.exceptions import ImmediateHttpResponse
 from django.shortcuts import redirect
 
+
 db_logger = logging.getLogger('db')
 
 
 class CustomLoginView(LoginView):
-
     def form_valid(self, form):
         success_url = self.get_success_url()
         try:
@@ -27,7 +27,6 @@ class CustomLoginView(LoginView):
 
 
 class CustomSignUpView(SignupView):
-
     def form_valid(self, form):
         # By assigning the User to a property on the view, we allow subclasses
         # of SignupView to access the newly created User instance
@@ -51,7 +50,6 @@ class CustomSignUpView(SignupView):
 
 
 class CustomLogoutView(LogoutView):
-
     def post(self, *args, **kwargs):
         url = self.get_redirect_url()
         if self.request.user.is_authenticated:

@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import django_heroku
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -14,9 +15,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = os.getenv('DEBUG')
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com', ]
 
 # Allauth Configurations
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
@@ -213,6 +214,8 @@ LOGGING = {
         }
     }
 }
+
+django_heroku.settings(locals())
 
 try:
     from .local_settings import *

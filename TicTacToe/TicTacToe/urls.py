@@ -10,6 +10,5 @@ urlpatterns = [
     path('game/', include('game.urls', namespace='game')),
     path('stats/', include('stats.urls', namespace='stats')),
     path('player/', include('player.urls', namespace='player')),
-    path('__debug__/', include(debug_toolbar.urls)),
 
 ]

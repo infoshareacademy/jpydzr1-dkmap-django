@@ -71,7 +71,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'TicTacToe.urls'
+ROOT_URLCONF = 'TicTacToe.TicTacToe.urls'
 
 TEMPLATES = [
     {

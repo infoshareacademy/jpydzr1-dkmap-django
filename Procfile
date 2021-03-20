@@ -1,1 +1,1 @@
-web: gunicorn TicTacToe/TicTacToe.wsgi --log-file -
+web: gunicorn TicTacToe.TicTacToe.wsgi --log-file -

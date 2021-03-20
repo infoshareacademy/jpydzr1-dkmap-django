@@ -1,0 +1,95 @@
+
+    <div class="column-100">
+        <h3>Last move made by player:
+            <span id="last_move"></span>
+        </h3>
+    </div>
+
+<div class="column-100">
+<div id="board-container">
+    <div class="board-row">
+        <div class="board-field">
+            <button class="board-button" id="first_field">
+                {% if board.first_field == '-' %}
+                {% else %}
+                {{ board.first_field }}
+                {% endif %}
+            </button>
+        </div>
+        <div class="board-field">
+            <button class="board-button" id="second_field">
+                {% if board.second_field == '-' %}
+                {% else %}
+                {{ board.second_field }}
+                {% endif %}
+            </button>
+        </div>
+        <div class="board-field">
+            <button class="board-button" id="third_field">
+                {% if board.third_field == '-' %}
+                {% else %}
+                {{ board.third_field }}
+                {% endif %}
+            </button>
+        </div>
+    </div>
+    <div class="board-row">
+        <div class="board-field">
+            <button class="board-button" id="fourth_field">
+                {% if board.fourth_field == '-' %}
+                {% else %}
+                {{ board.fourth_field }}
+                {% endif %}
+            </button>
+        </div>
+        <div class="board-field">
+            <button class="board-button" id="fifth_field">
+                {% if board.fifth_field == '-' %}
+                {% else %}
+                {{ board.fifth_field }}
+                {% endif %}
+            </button>
+        </div>
+        <div class="board-field">
+            <button class="board-button" id="sixth_field">
+                {% if board.sixth_field == '-' %}
+                {% else %}
+                {{ board.sixth_field }}
+                {% endif %}
+            </button>
+        </div>
+    </div>
+    <div class="board-row">
+        <div class="board-field">
+            <button class="board-button" id="seventh_field">
+                {% if board.seventh_field == '-' %}
+                {% else %}
+                {{ board.seventh_field }}
+                {% endif %}
+            </button>
+        </div>
+        <div class="board-field">
+            <button class="board-button" id="eighth_field">
+                {% if board.eighth_field == '-' %}
+                {% else %}
+                {{ board.eighth_field }}
+                {% endif %}
+            </button>
+        </div>
+        <div class="board-field">
+            <button class="board-button" id="ninth_field">
+                {% if board.ninth_field == '-' %}
+                {% else %}
+                {{ board.ninth_field }}
+                {% endif %}
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+
+{% block refresh_script %}
+
+<script>const refreshNewBoard = "{% url 'game:refresh_board' %}"</script>
+
+{% endblock refresh_script %}

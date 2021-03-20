@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="column-70">
+            <div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <h3 class="poppins-font-paragraph text-center pt-3"> {{ message }} </h3>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            {% if request.user.is_authenticated %}
+                {% if session %}
+                    <h3>Last visited board: {{ session }}</h3>
+                {% endif %}
+                {% if request.user.is_staff %}
+                    <a href="{% url "menu:log-report-view" %}">
+                        <button class="LOG-button" type="button">Logging module</button>
+                    </a>
+                {% endif %}
+            {% endif %}
+
+            <img class="responsive" src="{% static 'img/tictac.png' %}">
+
+        </div>
+        <div class="column-30">
+            {% if request.user.is_authenticated %}
+                <a href="{% url "menu:new-game-view" %}">
+                    <button class="CTA-button" type="button">PLAY</button>
+                </a>
+            {% else %}
+                <div class="container">
+                    <h2 class="welcome-text">Welcome in TicTacToe Game!</h2>
+                    <h4 class="welcome-text">Please Log In or Sign Up</h4>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock content %}

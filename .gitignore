@@ -3,6 +3,9 @@
 
 #venv
 /venv
+secret_data.py
+data.json
+ngrok
 
 ### Django ###
 *.log
@@ -119,8 +122,9 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+#.env
 .venv
+.idea
 env/
 venv/
 ENV/

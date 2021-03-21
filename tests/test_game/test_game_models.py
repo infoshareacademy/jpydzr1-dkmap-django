@@ -47,11 +47,11 @@ class MyTestCase(TestCase):
             f"Board in default state reported game as populated - `game`={board.game}"
         )
 
-        game_time = board.get_game_time()
-        self.assertEquals(
-            game_time, 0,
-            f"Board in default state reported non-0 game time: {game_time}"
-        )
+        # game_time = board.get_game_time()
+        # self.assertEquals(
+        #     game_time, 0,
+        #     f"Board in default state reported non-0 game time: {game_time}"
+        # )
 
     # @tag('enabled')
     def test_game_default_state(self):

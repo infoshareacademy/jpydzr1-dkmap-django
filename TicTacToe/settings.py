@@ -15,9 +15,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com', '*']
+ALLOWED_HOSTS = ['.herokuapp.com',]
 
 # Allauth Configurations
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'

@@ -7,10 +7,10 @@ Website created during InfoShare Academy Python Bootcamp. It is online based Tic
 statistics features.
 
 Welcome Page:
-![Window view]()
+![Window view](https://github.com/infoshareacademy/jpydzr1-dkmap-django/blob/master/static/img/welcome.png?raw=true)
 
 Board View:
-![Window view]()
+![Window view](https://github.com/infoshareacademy/jpydzr1-dkmap-django/blob/master/static/img/board.png?raw=true)
 
 ## Getting Started
 

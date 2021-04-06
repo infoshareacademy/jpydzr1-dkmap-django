@@ -19,6 +19,12 @@ If you would like to visit a website please click a link below:
 
 * [Visit website](https://tic-tac-toe-dkmap.herokuapp.com/)
 
+If you want to test our application, please log in using the following account.
+The account has admin's privileges but no access to admin panel:
+-test_user
+-testtest123
+
+
 ## Technologies:
 
 Project built with:
